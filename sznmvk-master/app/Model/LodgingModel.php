@@ -667,6 +667,7 @@ class LodgingModel extends BaseModel
                          foreach ($pars as $par) {
                              $this->setRoomForPar($par['application_id'],$room['id'], $old_data);
                          }
+                         break;
                      }
                  }
              }
@@ -698,6 +699,7 @@ class LodgingModel extends BaseModel
                              foreach ($pars as $par) {
                                  $this->setRoomForPar($par['application_id'],$room['id'], $old_data);
                              }
+                             break;
                          }
                      }
                  }
