@@ -1,0 +1,24 @@
+{block title}Administrace | Exporty - emaily nezaplacených přihlášek{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Exporty - emaily nezaplacených přihlášek</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+       {foreach $emails as $name=>$Uniemails}
+
+            <h3>{$name}</h3>
+            {foreach $Uniemails as $ord => $email}
+                {$email['email']}{sep}, {/sep}
+                {if ($ord+1) % 50 == 0}
+                    <br><br><strong>{$ord+1}</strong><br><br>
+                {/if}
+            {/foreach}
+            <br><br><strong>Celkem pre univerzitu: {count($Uniemails)}</strong><br><br>
+        {/foreach}
+        <br><br><strong>Celkem: {array_sum(array_map("count", $emails))}</strong><br><br>
+    </div>
+</div>

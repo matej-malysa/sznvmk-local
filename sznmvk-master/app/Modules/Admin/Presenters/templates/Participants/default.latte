@@ -1,0 +1,54 @@
+{block title}Administrace | Statistiky účastníků{/block}
+{block content}
+
+<div class="container-fluid">
+    <div class="row">
+        <h1>Statistiky účastníků</h1>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h3>S vybraným turnusem</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Potvrzených účastníků</th>
+                    <th>V pořadníku</th>
+                    <th>Zájemců</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $stats as $sessionTitle => $sessionStats}
+                    <tr>
+                        <td>{$sessionTitle}</td>
+                        <td>{$sessionStats[App\Model\ParticipantsModel::STATUS_CONFIRMED]}</td>
+                        <td>{$sessionStats[App\Model\ParticipantsModel::STATUS_GUEST]}</td>
+                        <td>{$sessionStats[App\Model\ParticipantsModel::STATUS_ZAJEMCE]}</td>
+                    </tr>
+                {/foreach}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <h3>Bez vybraného turnusu</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Počet</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>Zaplacena celá částka:</td>
+                    <td>{$statsSessionNull[App\Model\ParticipantsModel::STATUS_WAITING_FOR_ACTION]}</td>
+                </tr>
+                <tr>
+                    <td>Zaplacena jen záloha (zájemci):</td>
+                    <td>{$statsSessionNull[App\Model\ParticipantsModel::STATUS_ZAJEMCE]}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+parameters:
+    database: d270504_syst
+    dibi:
+        host: md101.wedos.net
+        username: w270504_syst
+        password: 21iRr0!L
+        database: %database%
+        profiler: true
+        lazy: true
+        run: true
+        result:
+            detectTypes: true

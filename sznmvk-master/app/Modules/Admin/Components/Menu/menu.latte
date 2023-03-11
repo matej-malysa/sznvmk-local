@@ -1,0 +1,34 @@
+{define menu-branch $menu, $isSubmenu}
+    <ul n:if="$menu->hasVisibleItemsOnMenu()" n:class="$isSubmenu ? ($menu->isActive() ? 'dropdown-menu show' : 'dropdown-menu') : 'navbar-nav nav'">
+        <li n:foreach="$menu->getVisibleItemsOnMenu() as $item" n:if="$item->isAllowed()">
+            {if $item->hasVisibleItemsOnMenu()}
+                <a href="#" n:class="dropdown-toggle" data-toggle="dropdown" title="{$item->getRealTitle()}">
+                    <i class="{$item->getData("icon")}"></i><span style="padding-left: 15px;">{$item->getRealTitle()}</span>
+                </a>
+            {include menu-branch $item, true}
+            {else}
+                <a href="{$item->getRealLink()}" title="{$item->getRealTitle()}" n:class="$item->isActive() ? 'active show', $item->hasVisibleItemsOnMenu() ? 'dropdown', $isSubmenu ? 'dropdown-item', $item->getData('class')">
+                    <i class="{$item->getData("icon")}" style="padding-right: 10px;"></i>{$item->getRealTitle()}
+                </a>
+            {/if}
+        </li>
+    </ul>
+{/define}
+
+{include menu-branch, $menu, false}
+
+<script>
+    var dropdownList = document.getElementsByClassName("dropdown-toggle");
+    var i;
+
+    for (i = 0; i < dropdownList.length; i++) {
+        dropdownList[i].addEventListener("click", function() {
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>

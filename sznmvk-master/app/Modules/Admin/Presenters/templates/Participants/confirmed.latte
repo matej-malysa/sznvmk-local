@@ -1,0 +1,105 @@
+{block title}Administrace | Přehled potvrzených účastníků{/block}
+{block content}
+<div class="row">
+    <div class="col-12">
+        <h1>Přehled potvrzených účastníků</h1>
+    </div>
+</div>
+{if $isAllowed}
+    <div class="row">
+        <div class="col-12 action-buttons"><br><br>
+
+
+            <select id="select_turnus1">
+                <option value = "0" >Vsetky turnusy</option>
+                <option value = "1" >1.turnus</option>
+                <option value = "2" >2.turnus</option>
+            </select>
+            <input type="button" value = "Rozrazit" onclick="return FunctionChangeTurnus();" class="ajax btn btn-success"/>
+            <a id = "start_script_0" n:href="startLodgingScript! 0" class = "ajax"> <a/>
+            <a id = "start_script_1" class="ajax" n:href="startLodgingScript! 1" > <a/>
+            <a id = "start_script_2" n:href="startLodgingScript! 2" class = "ajax"> <a/>
+
+            <input type="button" value = "Reset" onclick="return FunctionResetTurnus();" class="ajax btn btn-primary float-right"/>
+            <a id = "start_reset_0" n:href="reset! 0" class = "ajax"> <a/>
+            <a id = "start_reset_1" class="ajax" n:href="reset! 1" > <a/>
+            <a id = "start_reset_2" n:href="reset! 2" class = "ajax"> <a/>
+
+            <select id="select_turnus2" class="float-right" style="margin-top: 10px ; margin-right: 5px">
+                <option value="0" selected>Vsetky turnusy</option>
+                <option value="1">1.turnus</option>
+                <option value="2">2.turnus</option>
+            </select>
+            <br><br>
+
+
+
+
+
+
+            <br>
+            <div  id="spinner">
+                <br>
+                <div  class="loading">
+                </div>
+                <br>
+                    <p>Prebieha ukon</p>
+            </div>
+
+        </div>
+    </div>
+
+{/if}
+<div class="row">
+    <div class="col-12">
+        {snippet grid}
+            {control participantsGrid}
+        {/snippet}
+    </div>
+</div>
+
+<script>
+    function spinning() {
+        document.getElementById("spinner").style.display = "block";
+    }
+
+
+    function FunctionChangeTurnus() {
+        spinning();
+        $select_turnus1 =  document.getElementById("select_turnus1").value;
+        document.getElementById("start_script_".concat($select_turnus1)).click();
+    }
+
+    function FunctionResetTurnus() {
+        spinning();
+        $select_turnus2 = document.getElementById("select_turnus2").value;
+        document.getElementById("start_reset_".concat($select_turnus2)).click();
+
+    }
+</script>
+<style type="text/css">
+    #spinner {
+        display: none;
+
+
+    }
+
+    .loading {
+        border: 5px solid #ccc;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border-top-color: #1ecd97;
+        border-left-color: #1ecd97;
+        animation: spin 1s infinite ease-in;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>

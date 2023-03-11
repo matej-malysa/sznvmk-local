@@ -1,0 +1,6 @@
+<div n:snippet="flashes" class="flashes">
+    <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
+        {$flash->message}
+        <span title="Zavřít" class="closeFlash"><i class="fas fa-times"></i></span>
+    </div>
+</div>

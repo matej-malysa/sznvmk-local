@@ -1,0 +1,650 @@
+{block title}
+    Seznamovák {date("Y")} | Moje Přihláška
+{/block}
+
+{block content}
+    {* FB Pixel codes *}
+    <script>fbq('track', 'Lead');</script>
+    {if !empty($participantStatus)}
+        <script>fbq('track', 'Purchase');</script>
+    {/if}
+
+<div class="modra login" style="height: 100%">
+    <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" data-doc-height="1" role="banner" class="navbar third login w-nav">
+        <div class="container w-container">
+            <a href="{plink Homepage:default}" aria-current="page" class="brand w-nav-brand w--current">
+                <div class="logo">SEZNAMOVÁK</div>
+            </a>
+            <nav role="navigation" class="nav-menu w-nav-menu">
+                <a href="{plink Homepage:default#Program}" class="nav-white w-nav-link">Informace</a>
+                <a href="{plink Faq:default}" class="nav-white w-nav-link">Časté dotazy</a>
+                <a href="{plink Historie:default}" class="nav-white w-nav-link">Minulé ročníky</a>
+                <a href="{plink Instruktori:default}" class="nav-white w-nav-link">Instruktoři</a>
+                <a href="{plink Auth:default}" class="button-nav w-button">Tvoje Přihláška</a>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <div class="icon w-icon-nav-menu"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-2 w-container">
+        <div class="w-layout-grid grid t40">
+            <div class="col-lg-6">
+                <h2 class="white">{$application->firstname} {$application->lastname}</h2>
+            </div>
+            <div class="col-lg-6">
+                {switch $faculty->schoolId}
+                    {case 1}
+                        <div class="faculty-box noFac">
+                    {case 2}
+                        <div class="faculty-box muni">
+                    {case 3}
+                        <div class="faculty-box vut">
+                    {case 4}
+                        <div class="faculty-box mendelu">
+                {/switch}
+                {$faculty->name}
+                {if in_array($faculty->schoolId, [1,2,3,4])}
+                    </div>
+                {/if}
+            </div>
+            <div></div>
+            <div class="row">
+                <a href="{link logout!}" class="button w-button float-right">Odhlásit se</a>
+                {if date('Y-m-d') <= $editDeadline}
+                    <a href="{plink Auth:edit}" class="button w-button float-right">Upravit moji přihlášku</a>
+                {/if}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h3 class="white">Základní údaje</h3>
+                <table class="table table-auth">
+                    <tr>
+                        <td>Datum narození:</td>
+                        {if !empty($application->birthdate)}
+                            <td>{$application->birthdate|date: 'j. n. Y'}</td>
+                        {else}
+                            <td><span class="red">Nezadáno</span></td>
+                        {/if}
+                    </tr>
+                    <!--<tr>
+                        <td>Pohlaví:</td>
+                        {if !empty($gender)}
+                            <td>{$gender}</td>
+                        {else}
+                            <td><span class="red">Nezadáno</span></td>
+                        {/if}
+                    </tr>-->
+                    <tr>
+                        <td>E-mail:</td>
+                        <td>{$application->email}</td>
+                    </tr>
+                    <tr>
+                        <td>Telefon:</td>
+                        <td>{$application->phone}</td>
+                    </tr>
+                </table>
+            </div>
+            <br><br>
+            <div class="col-6">
+                <h3 class="white">Detaily účastníka</h3>
+                <table class="table table-auth">
+                    <tr>
+                        <td>Turnus:</td>
+                        {if !empty($application->session)}
+                            <td>{$application->sessionTitle}</td>
+                        {else}
+                            <td><span class="red">Nevybráno</span></td>
+                        {/if}
+                    </tr>
+                    {if $participantStatus == App\Model\ParticipantsModel::STATUS_GUEST}
+                        <tr>
+                            <td>Aktuální místo v pořadníku:</td>
+                            <td>{if empty($queueOrder)}-{else}{$queueOrder}.{/if}</td>
+                        </tr>
+                    {/if}
+                    <tr>
+                        <td>Doprava:</td>
+                        {if !empty($application->transport)}
+                            <td>{$application->transportName}</td>
+                        {else}
+                            <td><span class="red">Nevybráno</span></td>
+                        {/if}
+                    </tr>
+                    {if $application->transport == App\Model\TransportModel::VLASTNI}
+                        <tr>
+                            <td>SPZ (pro vyřízení parkování v kempu):</td>
+                            {if !empty($application->spz)}
+                                <td>{$application->spz}</td>
+                            {else}
+                                <td><span style="color: #ffc700">Nevyplněna</span></td>
+                            {/if}
+                        </tr>
+                    {/if}
+                    <tr>
+                        <td>Bonus:</td>
+                        <td>{$application->bonusName}</td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        {if empty($participantStatus)}
+                            {if !$storno}
+                                <td>Bez přiřazené platby</td>
+                            {else}
+                                <td><span style="color: #ffc700">Bylo zažádáno o storno</span></td>
+                            {/if}
+                        {elseif $participantStatus == App\Model\ParticipantsModel::STATUS_ZAJEMCE}
+                            <td><span style="color: #ffc700">{$participantStatusText}</td>
+                        {elseif $participantStatus == App\Model\ParticipantsModel::STATUS_GUEST}
+                            <td><span style="color: #ffc700">{$participantStatusText}</td>
+                        {elseif $participantStatus == App\Model\ParticipantsModel::STATUS_CONFIRMED}
+                            <td><span style="color: #28a745">{$participantStatusText}</td>
+                        {elseif $participantStatus == App\Model\ParticipantsModel::STATUS_WAITING_FOR_ACTION}
+                            <td><span class="red">{$participantStatusText}</td>
+                        {/if}
+                    </tr>
+                    <tr>
+                        <td>Diety a alergie:</td>
+                        <td>{if !empty($allergies)}{foreach $allergies as $id => $allergy} {$allergy }<br>{/foreach}{else}-{/if}</td>
+                    </tr>
+                    {if status == App\Model\ParticipantsModel::STATUS_CONFIRMED}
+                    <tr>
+                        <td>Aktivity:</td>
+                        <td>{if !empty($activities)}{foreach $activities as $id => $activity} {$activity }<br>{/foreach}{else}-{/if}</td>
+                    </tr>
+                    {/if}
+                </table>
+
+                {if in_array($participantStatus, [App\Model\ParticipantsModel::STATUS_WAITING_FOR_ACTION, App\Model\ParticipantsModel::STATUS_GUEST])}
+                    <h4 class="white t40">Možné akce</h4>
+                    {foreach $availableSessions as $sessionId => $capacity}
+                        {if $capacity > 0}
+                            <a href="{link changeSession!, 'sessionId' => $sessionId}" class="button w-button">Změnit na turnus {$sessionId} - aktuálně {$capacity} volných míst</a><br>
+                        {/if}
+                    {/foreach}
+                {/if}
+            </div>
+        </div>
+        <br><br>
+         <div id="invite_friend_div" class="col-6">
+            <h3 class="white">Pozvi priateľa</h3>
+            <table class="table table-auth">
+                <tr>
+                    <td>
+                        Pošli pozvánku:
+                    </td>
+                    <td>
+                        <input id="invite_friend_input"  type="email"  style="color: #000"></input>
+                        <button name="invite_friend_send"  class="invite_friend button float-right" style="padding: 3px 15px; line-height: normal;" >Pozvat</button>
+                        <br/>
+                        <span id="invite_friend_Errspan" class="red"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Pozvaní priatelia: ( {count($inv_friends)}/12)
+                    </td>
+                    <td id="invite_friend_list">
+                        <span> E-mail | Potvrdený účastník </span>
+                             <br/><br/>
+                        {foreach $inv_friends as $friend}
+                            <span>{$friend['email']} | {if $friend['status'] === 3}Áno{else}Nie{/if}
+                            </span>
+                            <br/>
+                            <br/>
+                        {/foreach}
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <br><br>
+        <div id="group" class="col-6">
+            <h3 class="white">Ubytovaní se skupinou</h3>
+            {if empty($participantStatus)}
+                <ul class="white">
+                    <li>Máš kamarády se kterými chceš
+                        být ubytován na stejném pokoji?</li><br>
+                    <li>Po zaplacení plné částky můžeš vytvořit skupinu lidí
+                        se kterými chceš sdílet prostor na Seznamováku.</li>
+                </ul>
+            {elseif $participantStatus != App\Model\ParticipantsModel::STATUS_CONFIRMED}
+                <ul class="white">
+                    <li>Máš kamarády se kterými chceš
+                        být ubytován na stejném pokoji?</li><br>
+                    <li>Když se staneš potvrzeným účastníkem můžeš vytvořit skupinu lidí
+                        se kterými chceš sdílet prostor na Seznamováku.</li>
+                </ul>
+            {elseif empty($application->session) }
+                <ul class="white">
+                    <li>Máš kamarády se kterými chceš
+                        být ubytován na stejném pokoji?</li><br>
+                    <li>Po zvolení turnusu můžeš vytvořit skupinu lidí
+                        se kterými chceš sdílet prostor na Seznamováku.</li>
+                </ul>
+            {else}
+                <ul class="white">
+                    <li>Pro společné ubytování s tvými kamarády postupuj následovně:</li><br>
+                    <li>1.	Vytvoříš skupinu a tím se stáváš vedoucím skupiny</li><br>
+                    <li>2.	Jako vedoucí skupiny pozveš kamarády (kteří jsou již potvrzeními účastníky) do skupiny pomocí jejich ID do kolonky „Poslat pozvánku“. Maximálně můžeš poslat 5 pozvánek.</li><br>
+                    <li>3.	Kamarádi přijmou od tebe pozvánku přes jejich účet v systému. Pokud již není možné pozvánku přijmout, tak Vás již spolu nedokážeme ubytovat z důvodu obsazení bungalovů jinými skupinkami.</li>
+                </ul>
+                <br>
+                <table class="table table-auth">
+                    <tr>
+                        <td>ID uživatele:</td><td>{strval($ID_for_group)}</td>
+                    </tr>
+                    {if $group}
+                        {if $group->create_by != $application->id}
+                            <tr>
+                                <td>Skupina:</td>
+                                <td>
+                                    <span class="green">Ve skupině od {$create_by_name} | {$group->count}/6</span>
+                                    <span>
+                                        <a id = "delete_from_group" n:href="deleteFromGroup!" class = "button w-button float-right">Opustit skupinu<a/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Členové skupiny:
+                                </td>
+                                <td>
+                                    {foreach $members as $member}
+                                        <span>{$member['name']} | {$member['role']}</span><br/>
+                                    {/foreach}
+                                </td>
+                            </tr>
+                        {else}
+                            <tr>
+                                <td>Skupina:</td>
+                                <td>
+                                    <span class="green">Vytvořena | {$group->count}/6</span>
+                                    <span>
+                                        <a id = "delete_group" n:href="deleteGroup!" class = "button w-button float-right">Rozpustit skupinu<a/>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Členové skupiny:
+                                </td>
+                                <td>
+                                    {foreach $members as $member}
+                                        <span>{$member['name']} | {$member['role']}
+                                        {if $member['role'] != "Vedúci"}
+                                            <a id = "delete_member" n:href="deleteMember! $member['id']" class = "button float-right" style="padding: 3px 15px; line-height: normal;">Vyhodit člena<a/>
+                                        {/if}
+                                                </span>
+                                        <br/>
+                                        <br/>
+                                    {/foreach}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Poslat pozvánku:</td>
+                                {if count($InviMems) < 6-count($members)}
+                                    <td>
+                                        <input id="participant_code" maxlength="9" type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="color: #000"></input>
+                                        <button name="send"  class="pozvat button float-right" style="padding: 3px 15px; line-height: normal;" >Pozvat</button>
+                                        <br/>
+                                        <span id="Errspan" class="red"></span>
+                                    </td>
+                                {else}
+                                    <td>
+                                        <span>Odeslán maximální počet pozvánek.</span>
+                                    </td>
+                                {/if}
+
+                            </tr>
+
+                                <td>
+                                    <span>Odeslané pozvánky: {count($InviMems)}/{6-count($members)}</span>
+                                </td>
+                                <td>
+                                    {foreach $InviMems as $inviMem}
+                                        <span>{$inviMem['name']}</span>
+                                        <a id = "delete_invi_member" n:href="deleteInviMember! $inviMem['id']" class = "button float-right" style="padding: 3px 5px; line-height: normal;">Vyhodit pozvánku<a/>
+                                        <br/>
+                                        <br/>
+                                        {/foreach}
+                                </td>
+                            </tr>
+                        {/if}
+                        <tr>
+                            {if count($invitation)}
+                                <td>Pozvánky do skupiny:
+                                    <br>
+                                    (Pozvánku lze přijmout po opuštění skupiny.)
+                                </td>
+                                <td>
+                                    {foreach $invitation as $invi => $var}
+                                        <div>
+                                            <span >Od {$var['firstname']} {$var['lastname']}</span>
+                                            <span class = "float-right">
+                                            <a id = "denied_{$var['id']}" n:href="deniedInvitation! $var['id']"  class = "button float-right" style="padding: 3px 15px; line-height: normal;">Odmítnut<a/>
+                                        </span>
+                                        </div><br>
+                                    {/foreach}
+                                </td>
+                            {else}
+                                <td>Pozvánky do skupiny:</td>
+                                <td><span class="red">Žádné</span></td>
+                            {/if}
+                        </tr>
+                    {else}
+                        <tr>
+                            <td>Skupina:</td>
+                            <td>
+                                <span class="red">Žádná</span>
+                                <a id = "create_group" n:href="createGroup!" class = "button w-button float-right">Vytvor skupinu<a/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Pozvánky do skupiny:</td>
+
+                            {if count($invitation)}
+                                <td>
+                                    {foreach $invitation as $invi => $var}
+                                        <div>
+                                            <span >Od {$var['firstname']} {$var['lastname']}</span>
+                                            <span class = "float-right">
+                                                {if $var['CanAccept']}
+                                                <a id = "accept_{$var['id']}" n:href="acceptInvitation! $var['id']"  class = "button float-right" style=" margin-right:3px; padding: 3px 5px; line-height: normal;" >Přijat<a/>
+                                                    {else}
+                                                    <span class="red">Max. kapacita</span>
+                                                    {/if}
+                                                <a id = "denied_{$var['id']}" n:href="deniedInvitation! $var['id']"  class = "button float-right" style="margin-left:3px; padding: 3px 5px; line-height: normal;">Odmítnut<a/>
+                                            </span>
+                                        </div><br>
+                                    {/foreach}
+                                </td>
+                            {else}
+                                <td><span class="red">Žádná</span></td>
+                            {/if}
+                        </tr>
+                    {/if}
+                </table>
+            {/if}
+
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-6">
+                <h3 class="white">Platby</h3>
+                <h4 class="white b16">Souhrn</h4>
+                {if !$storno}
+                    <p class="white b0">Celkem zaplaceno: {$paymentsSum|number: 0, ',', ' '},- Kč</p>
+                    <p class="white">Zbývá zaplatit: {if $paymentsRemaining > 0.0}<span style="color: red">{$paymentsRemaining|number: 0, ',', ' '},- Kč{else}<span style="color: #28a745">Vše zaplaceno{/if}</span></p>
+                    {if $paymentsRemaining > 0.0}
+                        <p class="white b0">Termín zaslání zálohy: <span style="color: #ffc700">{$deadlineZaloha|date: 'd.m.Y'}</span></p>
+                        <p class="white">Termín zaslání doplatku: <span style="color: #ffc700">{$deadlines[App\Model\ImportantDatesModel::DOPLATEK]['deadline']|date: 'd.m.Y'}</span></p>
+                        <p class="white b0">Číslo účtu: 2200430629/2010</p>
+                        <p class="white">Variabilní symbol: {$application->vs}</p>
+                    {/if}
+                {else}
+                    <p class="b0" style="color: #ffc700">Bylo požádáno o storno - více informací bylo zasláno e-mailem.</p>
+                {/if}
+                <h4 class="white b16">Rozpad plateb</h4>
+                <table class="table table-auth-payments">
+                    {if !(empty($payments))}
+                        <tr>
+                            <th>Datum provedení transakce</th>
+                            <th>Částka (Kč)</th>
+                            <th>Zpráva pro příjemce</th>
+                        </tr>
+                    {/if}
+                    {foreach $payments as $payment}
+                        <tr>
+                            <td>{$payment->payment_date|date: "d.m.Y"}</td>
+                            <td>{$payment->amount}</td>
+                            <td>{$payment->message}</td>
+                        </tr>
+                    {/foreach}
+                </table>
+                <h3 class="white t40">Platební podmínky</h3>
+                <h4 class="white b16">V ceně pobytu je zahrnuto:</h4>
+                <ul class="white">
+                    <li>celodenní vstup do Aqualandu Moravia</li>
+                    <li>ubytování v bungalovech nebo v chatkách v kempu ATC Merkur</li>
+                    <li>polopenze (snídaně + večeře)</li>
+                    <li>spolkové univerzitní odpoledne</li>
+                    <li>standup show Slam Poetry, Silent Disco nebo UV párty</li>
+                    <li>a další bohatý léty prověřený našlapaný program</li>
+                </ul>
+                <h4 class="white b16">Informace o rezervaci termínu a platbě:</h4>
+                <ul class="white">
+                    <li>zálohu ve výši {$cena[App\Model\PaymentsLimitsModel::ZALOHA_ID]['amount']} Kč je nutné poslat nejpozději do {$deadlines[App\Model\ImportantDatesModel::ZALOHA_2]['deadline']|date: 'd.m.Y'} nebo po tomto datu bezprostředně po rezervaci</li>
+                    <li>doplatek ve výši {$cena[App\Model\PaymentsLimitsModel::FULL_PRICE_ID]['amount'] - $cena[App\Model\PaymentsLimitsModel::ZALOHA_ID]['amount']} Kč je potřeba zaplatit nejpozději do {$deadlines[App\Model\ImportantDatesModel::DOPLATEK]['deadline']|date: 'd.m.Y'} na stejný účet jako zálohu</li>
+                    <li>do zprávy pro příjemce uveď svůj platný e-mail (klidně bez zavináče), variabilním symbolem je tvé telefonní číslo</li>
+                    <li>doplatek je samozřejmě možné poslat současně se zálohou</li>
+                </ul>
+                <h4 class="white b16">Storno podmínky:</h4>
+                <ul class="white">
+                    <li>v případě stornování pobytu po termínu {$deadlines[App\Model\ImportantDatesModel::ZALOHA_1]['deadline']|date: 'd.m.Y'} je účtován storno poplatek ve výši zálohy, tedy {$cena[App\Model\PaymentsLimitsModel::ZALOHA_ID]['amount']} Kč</li>
+                    <li>v případě stornování pobytu po termínu {$deadlines[App\Model\ImportantDatesModel::DOPLATEK]['deadline']|date: 'd.m.Y'} je účtován storno poplatek ve výši celé částky</li>
+                </ul>
+                <br>
+                <p class="white">Podrobné informace k odjezdu a programu Ti zašleme e-mailem před odjezdem na akci.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(".invite_friend").on("click", function(){
+
+
+        var data = [];
+
+        var val = $("#invite_friend_input").val()
+
+        let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (!val.match(regex))
+            return;
+
+        data.push({
+            val: val
+        })
+
+        var url ="/auth?do=InviteFriend";
+        $.ajax( {
+            url: url,
+            data:{
+                data: data
+            },
+            success: function (response) {
+                if (response.hasOwnProperty('success')) {
+
+                    if (response.success == 1) // Neuspech
+                    {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Pozvaný priateľ je už potvrdený účastník.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 2) // Sam seba
+                    {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Nemôžeš pozvať sám seba.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 3) // Max pozvanok
+                    {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Max počet pozvaných.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 4) // Pozvanie navzájom
+                    {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Nemožno sa pozvať navzákom.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 5) // Viaceri pozvali rovnaky mail
+                    {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Vlastník emailu je už medzi pozvanými.");
+                        span.appendChild(txt);
+                    }
+                    else {
+                        span = document.getElementById("invite_friend_Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        } 
+                        span = document.getElementById("invite_friend_count");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        span.textContent="Pozvaní priatelia: ("+ response.data.length +"/12)";
+                        span = document.getElementById("invite_friend_list");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        var br = document.createElement("br");
+                        newSpan = document.createElement("span");
+                        newSpan.textContent = " E-mail | Potvrdený účastník ";
+                        span.appendChild(newSpan);
+                        span.appendChild(document.createElement("br"));
+                        span.appendChild(document.createElement("br"));
+                        data = response.data;
+                        data.forEach((item, index)=>{
+                            newSpan = document.createElement("span");
+                            if(item.status === 3){
+                                newSpan.textContent = " "+item.email+"| Áno ";
+                            }
+                            else
+                            {
+                                newSpan.textContent = " "+item.email+"| Nie ";
+                            }
+
+                            span.appendChild(newSpan);
+                            span.appendChild(document.createElement("br"));
+                            span.appendChild(document.createElement("br"));
+                        })
+                    }
+                } else {
+                    alert("Error: no success key");
+                }
+            },
+            error: function (textStatus, errorThrown) {
+                alert("Error: " + textStatus);
+            }
+        });
+
+
+    });
+
+    $(".pozvat").on("click", function(){
+        var data = [];
+
+        var val = $("#participant_code").val()
+
+        data.push({
+            val: val
+        })
+
+        var url ="/auth?do=SendInvitation";
+        $.ajax( {
+            url: url,
+            data:{
+                data: data
+            },
+            success: function (response) {
+                if (response.hasOwnProperty('success')) {
+
+                    if (response.success == 1) // uspesne pridane
+                    {
+                        window.location.reload();
+                    }
+                    else if (response.success == 2) // max pozvanok
+                    {
+                        window.location.reload();
+                    }
+                    else if (response.success == 3) // Zle ID
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Zadané ID se nenachází v systému.");
+                        span.appendChild(txt);
+
+                    }
+                    else if (response.success == 4) // Nie je Potvrdeny
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Pozvaný účastník není Potvrzený učastník.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 5) // Rovnake ID
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Nemůžete pozvat sebe sama.");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 6) // Uz pozvane ID
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Účastník je už pozván");
+                        span.appendChild(txt);
+                    }
+                    else if (response.success == 7) // Nie rovnaky turnus
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Účastník není ze stejného turnusu.");
+                        span.appendChild(txt);
+                    }
+                    else // Chyba SYS
+                    {
+                        span = document.getElementById("Errspan");
+                        while (span.hasChildNodes()) {
+                            span.removeChild(span.firstChild);
+                        }
+                        txt = document.createTextNode("Chyba systému.");
+                        span.appendChild(txt);
+                    }
+                } else {
+                    alert("Error: no success key");
+                }
+            },
+            error: function (textStatus, errorThrown) {
+                alert("Error: " + textStatus);
+            }
+        });
+
+
+    });
+
+
+</script>

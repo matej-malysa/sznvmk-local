@@ -1,0 +1,65 @@
+{block title}Administrace | Detail platby{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Detail platby #{$payment->id}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 action-buttons">
+        <a class="btn btn-primary float-right" href="{plink Payments:default}">Zpět</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 t40">
+        <table class="table table-striped table-payment-form">
+            <tr>
+                <td>Stav platby:</td>
+                <td>{$paymentStatus}</td>
+            </tr>
+            <tr>
+                <td>Přiřazená přihláška</td>
+                <td>{if !empty($payment->application_id)}<a href="{plink Applications:detail, $payment->application_id}">{$payment->application_id}</a>{else}{/if}</td>
+            </tr>
+            <tr>
+                <td>Datum transakce:</td>
+                <td>{$payment->payment_date|date: 'j. n. Y'}</td>
+            </tr>
+            <tr>
+                <td>Číslo účtu:</td>
+                <td>{$payment->account_number}</td>
+            </tr>
+            <tr>
+                <td>Kód banky:</td>
+                <td>{$payment->bank_code}</td>
+            </tr>
+            <tr>
+                <td>Název účtu:</td>
+                <td>{$payment->account_name}</td>
+            </tr>
+            <tr>
+                <td>Částka:</td>
+                <td>{$payment->amount}</td>
+            </tr>
+            <tr>
+                <td>Variabilní symbol:</td>
+                <td>{$payment->vs}</td>
+            </tr>
+            <tr>
+                <td>Konstantní symbol:</td>
+                <td>{$payment->ks}</td>
+            </tr>
+            <tr>
+                <td>Zpráva pro příjemce:</td>
+                <td>{$payment->message}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>Akce spojené s touto platbou</h3>
+        {control paymentsLogGrid}
+    </div>
+</div>

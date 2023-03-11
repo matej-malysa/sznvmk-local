@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <title>{include title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {control cssAdmin}
+    <script src="https://kit.fontawesome.com/3cc79aee54.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    {control jsAdmin}
+    <script>var happy = new Happy; happy.init();</script>
+    {snippet flashes}
+        {control flashes}
+    {/snippet}
+
+    <nav id="sidebarMenu" class="sidebar">
+        <a href="{plink Dashboard:default}" title="Hlavní strana" class="sidebarLogo"><img src="/images/logo-seznamovak.png" class="img-fluid"></a>
+        {if !isset($hideMenu)}
+            {control menu}
+            <a href="{link logout!}" title="Odhlásit se"><i class="fas fa-times" style="padding-right: 10px"></i>Odhlásit se</a>
+            <a href="#" class="icon" onclick="openHamburger()"><i class="fas fa-bars"></i></a>
+        {/if}
+    </nav>
+
+    <main class="content">
+        {include content}
+    </main>
+
+    <script>
+        function openHamburger() {
+            var x = document.querySelectorAll(".sidebar a");
+            var i;
+
+            for (i = 0; i < x.length; i++) {
+                if (x[i].className.slice(-11) === " responsive") {
+                    x[i].className = x[i].className.slice(0, x[i].className.length - 11);
+                } else {
+                    x[i].className += " responsive";
+                }
+            }
+        }
+    </script>
+</body>

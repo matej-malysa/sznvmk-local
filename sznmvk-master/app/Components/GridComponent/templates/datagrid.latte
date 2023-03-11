@@ -1,0 +1,54 @@
+{extends $originalTemplate}
+
+{define tfoot}
+    <tfoot n:snippet="pagination">
+    {if $control->isPaginated() || $filter_active}
+        <tr n:block="pagination">
+            <td colspan="{$control->getColumnsCount()}" n:if="!$control->isTreeView()" class="row-grid-bottom">
+                <div class="row mt-3">
+                    <div class="col-12 col-md-3 order-3 order-md-1 col-items text-center text-md-left">
+                        <small class="text-muted" n:if="$control->isPaginated()">
+                            ({var $paginator = $control['paginator']->getPaginator()}
+
+                            {if $control->getPerPage() === 'all'}
+                            {='ublaboo_datagrid.items'|translate}: {='ublaboo_datagrid.all'|translate}
+                            {else}
+                            {='ublaboo_datagrid.items'|translate}: {$paginator->getOffset() > 0 ? $paginator->getOffset() + 1 : ($paginator->getItemCount() > 0 ? 1 : 0)} - {sizeof($rows) + $paginator->getOffset()}
+                            {='ublaboo_datagrid.from'|translate} {$paginator->getItemCount()}
+                            {/if})
+                        </small>
+                    </div>
+                    <div class="col-12 col-md-6 order-2 col-pagination text-center">
+                        {control paginator}
+                    </div>
+                    <div class="col-12 col-md-3 order-1 order-md-3 col-per-page text-right">
+                        <div class="form-group d-flex justify-content-end">
+                            <a n:if="$filter_active" n:href="resetFilter!" class="ajax btn btn-danger btn-sm reset-filter mr-2">{='ublaboo_datagrid.reset_filter'|translate}</a>
+                            {if $control->isPaginated()}
+                                {input $filter['perPage'], data-autosubmit-per-page => TRUE, class => 'form-control input-sm form-control-sm selectpicker-disable'}
+                                {input $filter['perPage_submit'], class => 'btn btn-secondary btn-sm ml-2 datagrid-per-page-submit', style => 'display:none'}
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    {/if}
+    </tfoot>
+{/define}
+
+{block group_actions}
+    {='ublaboo_datagrid.group_actions'|translate}:
+    {foreach $filter['group_action']->getControls() as $form_control}
+        {if $form_control instanceof \Nette\Forms\Controls\SubmitButton}
+            {input $form_control, class => 'btn btn-primary btn-sm', style => 'display:none'}
+        {elseif $form_control->getName() == 'group_action'}
+            {input $form_control, class => 'form-control input-sm form-control-sm selectpicker-disable', disabled => TRUE}
+        {else}
+            {input $form_control, style => 'display:none'}
+        {/if}
+    {/foreach}
+    {if $control->shouldShowSelectedRowsCount()}
+        <span class="datagrid-selected-rows-count"></span>
+    {/if}
+{/block}

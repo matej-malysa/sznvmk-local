@@ -1,0 +1,17 @@
+stages:
+#    - phpstan
+    - deploy
+
+#phpstan:
+#  stage: phpstan
+#  script:
+#    - php ./vendor/bin/phpstan analyse --configuration app/config/phpstan.neon app www
+
+
+deploy:
+    stage: deploy
+    script:
+        - apt-get update -qq && apt-get install -y -qq lftp
+        - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./ ./www/domains/seznamovak.org/ --ignore-time --parallel=10 --exclude-glob .git* --exclude temp/ --exclude log/ --exclude .idea/ --exclude www/images/instruktori"
+    only:
+        - master

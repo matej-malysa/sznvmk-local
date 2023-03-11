@@ -1,0 +1,155 @@
+{block title}Administrace | Detail přihlášky{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12 flexbox">
+        <div class="col-lg-6">
+            <h1>{$application->firstname} {$application->lastname}</h1>
+        </div>
+        <div class="col-lg-6">
+            {switch $faculty->schoolId}
+                {case 1}
+                    <div class="faculty-box noFac">
+                {case 2}
+                    <div class="faculty-box muni">
+                {case 3}
+                    <div class="faculty-box vut">
+                {case 4}
+                    <div class="faculty-box mendelu">
+            {/switch}
+            {$faculty->name}
+            {if in_array($faculty->schoolId, [1,2,3,4])}
+                </div>
+            {/if}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 action-buttons">
+        {if $application->status !== App\Model\ApplicationsModel::STATUS_DELETED}
+            <a class="btn btn-primary float-right" href="{plink Applications:default}">Zpět</a>
+            {if $user_role == App\Classes\Nette\Security\Authorizator::ROLE_ADMIN || $user_role == App\Classes\Nette\Security\Authorizator::ROLE_LEADER}
+                <a class="btn btn-danger float-right mr10" href="{link delete! $application->id}">Smazat přihlášku</a>
+            {/if}
+            <a class="btn btn-warning float-right mr10" href="{plink Applications:edit $application->id}">Editovat přihlášku</a>
+            <a class="btn btn-primary float-right mr10" href="{link passwordReset! $application->id}">Resetovat heslo</a>
+        {else}
+            <a class="btn btn-primary float-right" href="{plink Applications:deleted}">Zpět</a>
+            <a class="btn btn-success float-right mr10" href="{link restore! $application->id}">Obnovit přihlášku</a>
+        {/if}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 flexbox">
+        <div class="col-lg-6">
+            <h3>Základní údaje</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td>Datum narození: </td>
+                    {if !empty($application->birthdate)}
+                        <td>{$application->birthdate|date: 'j. n. Y'}</td>
+                    {else}
+                        <td><span class="red">Nezadáno</span></td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>Pohlaví: </td>
+                    {if !empty($gender)}
+                        <td>{$gender}</td>
+                    {else}
+                        <td><span class="red">Nezadáno</span></td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>E-mail:</td>
+                    <td>{$application->email}</td>
+                </tr>
+                <tr>
+                    <td>Telefon:</td>
+                    {if !empty($application->phone)}
+                        <td><a href="tel:{$application->phone}">{$application->phone}</a></td>
+                    {else}
+                        <td><span class="red">Nezadáno</span></td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>Stav přihlášky:</td>
+                    <td>{$application->statusName}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-lg-6">
+            <h3>Detaily účastníka</h3>
+            <table class="table table-striped">
+                <tr>
+                    <td>Turnus:</td>
+                    {if !empty($application->session)}
+                        <td>{$application->sessionTitle}</td>
+                    {else}
+                        <td><span class="red">Nevybráno</span></td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>Doprava:</td>
+                    {if !empty($application->transport)}
+                        <td>{$application->transportName}</td>
+                    {else}
+                        <td><span class="red">Nevybráno</span></td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>SPZ:</td>
+                    {if !empty($application->spz)}
+                        <td>{$application->spz}</td>
+                    {else}
+                        <td>-</td>
+                    {/if}
+                </tr>
+                <tr>
+                    <td>Bonus:</td>
+                    <td>{$application->bonusName}</td>
+                </tr>
+                <tr>
+                    <td>Stav účastníka:</td>
+                    <td>{if !empty($participant)}{$participant->statusName}{else}-{/if}</td>
+                </tr>
+                {if !empty($participant) && $participant->status == App\Model\ParticipantsModel::STATUS_GUEST}
+                    <tr>
+                        <td>Aktuální místo v pořadníku:</td>
+                        <td>{if empty($queueOrder)}-{else}{$queueOrder}.{/if}</td>
+                    </tr>
+                {/if}
+                <tr>
+                    <td>Přiřazený pokoj:</td>
+                    <td>{if !empty($participant) && !empty($participant->room)}{$participant->room}{else}-{/if}</td>
+                </tr>
+                <tr>
+                    <td>Diety a alergie:</td>
+                    <td>{if !empty($allergies)}{foreach $allergies as $allergy} {$allergy }<br>{/foreach}{else}-{/if}</td>
+                </tr>
+                <tr>
+                        <td>Speciální strava:</td>
+                        <td>{if !empty($food_preferences)}{foreach $food_preferences as $food} {$food }<br>{/foreach}{else}-{/if}</td>
+                </tr>
+                {if !empty($participant) && $participant->status == App\Model\ParticipantsModel::STATUS_CONFIRMED}
+                <tr>
+                    <td>Aktivity:</td>
+                    <td>{if !empty($activities)}{foreach $activities as $activity} {$activity }<br>{/foreach}{else}-{/if}</td>
+                </tr>
+                {/if}
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>Platby spojené s touto přihláškou</h3>
+        {control applicationPaymentsGrid}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>Akce spojené s touto přihláškou</h3>
+        {control applicationsLogGrid}
+    </div>
+</div>

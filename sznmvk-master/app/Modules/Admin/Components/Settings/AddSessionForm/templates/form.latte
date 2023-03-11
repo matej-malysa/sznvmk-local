@@ -1,0 +1,41 @@
+{form form class => form}
+    <div n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    <div class="form-group">
+        <label for="title">Označení</label>
+        <input type="text" class="form-control" name="title">
+    </div>
+    <div class="form-group">
+        <label for="start">Začátek</label>
+        <input type="date" class="form-control" name="start">
+    </div>
+    <div class="form-group">
+        <label for="end">Konec</label>
+        <input type="date" class="form-control" name="end">
+    </div>
+    <div class="form-group">
+        <label for="first_lodging_capacity">Kapacita primárního ubytování</label>
+        <input type="number" class="form-control" name="first_lodging_capacity" min=0>
+    </div>
+    <div class="form-group">
+        <label for="second_lodging_capacity">Kapacita sekundárního ubytování</label>
+        <input type="number" class="form-control" name="second_lodging_capacity" min=0>
+    </div>
+    <div class="form-group">
+        <label for="third_lodging_capacity">Kapacita terciárního ubytování</label>
+        <input type="number" class="form-control" name="third_lodging_capacity" min=0>
+    </div>
+    <div class="form-group">
+        <label for="instructors_capacity">Míst pro instruktory</label>
+        <input type="number" class="form-control" name="instructors_capacity" min=0 value=0>
+    </div>
+    <div class="form-group">
+        <label for="guest_capacity">Míst pro hosty</label>
+        <input type="number" class="form-control" name="guest_capacity" min=0 value=0>
+    </div>
+    <div class="form-row">
+        <input type="submit" name="send" class="btn btn-success form-submit" value="Uložit turnus">
+        <input type="submit" name="cancel" class="btn btn-danger form-submit next" value="Zrušit" formnovalidate>
+    </div>
+{/form}

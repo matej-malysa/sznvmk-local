@@ -1,0 +1,30 @@
+{
+	"name": "nextras/secured-links",
+	"type": "library",
+	"description": "Package secures Nette Framework signals against CSRF attack.",
+	"keywords": ["nextras", "nette", "application", "secured signals"],
+	"license": ["MIT"],
+	"authors": [
+		{
+			"name": "Nextras Project",
+			"homepage": "https://github.com/nextras/secured-links/graphs/contributors"
+		}
+	],
+	"require": {
+		"php": "^7.2 || ^8.0",
+		"nette/application": "^3.1.5",
+		"nette/utils": "^3.0"
+	},
+	"require-dev": {
+		"nette/tester": "^2.2",
+		"mockery/mockery": "^1.2"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "1.5-dev"
+		}
+	},
+	"autoload": {
+		"psr-4": { "Nextras\\Application\\UI\\": "src/" }
+	}
+}

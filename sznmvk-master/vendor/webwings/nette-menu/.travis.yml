@@ -1,0 +1,18 @@
+language: php
+
+sudo: false
+
+php:
+  - 7.1
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - travis_retry composer install --no-progress --prefer-dist
+
+script: vendor/bin/tester -s -p php -c tests/php.ini tests/CarrooiTests/Menu/
+
+after_failure:
+  - for i in $(find tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done

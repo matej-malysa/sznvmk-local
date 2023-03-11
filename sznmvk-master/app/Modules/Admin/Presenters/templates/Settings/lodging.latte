@@ -1,0 +1,43 @@
+{block title}Administrace | Ubytování{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Seznam bungalovů/chatek</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+
+            <a href="{plink Settings:addLodging}" class="btn btn-primary">Přidat bungalov/chatku</a>
+            <br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+    <h4>Turnus 1:</h4>
+
+
+        <p {if $actualBungalov_1 != $setBungalov_1} style="color: red;" {else} style="color: green;"{/if}>Bungalov: {$actualBungalov_1}/{$setBungalov_1} {if $actualBungalov_1 < $setBungalov_1} - Chýba {$setBungalov_1 - $actualBungalov_1} lôžok.{elseif $actualBungalov_1 > $setBungalov_1} - Prebytok {$actualBungalov_1 - $setBungalov_1} lôžok.{/if}</p>
+        <p {if $actualChatka_1 != $setChatka_1} style="color: red;" {else} style="color: green;"{/if}>Chatka: {$actualChatka_1}/{$setChatka_1} {if $actualChatka_1 < $setChatka_1} - Chýba {$setChatka_1 - $actualChatka_1} lôžok.{elseif $actualChatka_1 > $setChatka_1} - Prebytok {$actualChatka_1 - $setChatka_1} lôžok.{/if}</p>
+        <br/>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h4>Turnus 2:</h4>
+            <p {if $actualBungalov_2 != $setBungalov_2} style="color: red;" {else} style="color: green;"{/if}>Bungalov: {$actualBungalov_2}/{$setBungalov_2} {if $actualBungalov_2 < $setBungalov_2} - Chýba {$setBungalov_2 - $actualBungalov_2} lôžok.{elseif $actualBungalov_2 > $setBungalov_2} - Prebytok {$actualBungalov_2 - $setBungalov_2} lôžok.{/if}</p>
+            <p {if $actualChatka_2 != $setChatka_2} style="color: red;" {else} style="color: green;"{/if}>Chatka: {$actualChatka_2}/{$setChatka_2} {if $actualChatka_2 < $setChatka_2} - Chýba {$setChatka_2 - $actualChatka_2} lôžok.{elseif $actualChatka_2 > $setChatka_2} - Prebytok {$actualChatka_2 - $setChatka_2} lôžok.{/if}</p>
+        <br>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+
+        {snippet grid}
+            {control lodgingGrid}
+        {/snippet}
+    </div>
+</div>

@@ -1,0 +1,14 @@
+{form form class => "form"}
+    <div class="white" n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    <div id="w-node-0456468a46c9-0e999b1f" class="div-block-15">
+        <label for="email" class="field-label">E-mail</label>
+        <input type="email" class="text-field w-input" n:name="email" required>
+    </div>
+    <div id="w-node-0456468a46cd-0e999b1f" class="div-block-15">
+        <label for="password" class="field-label">Heslo</label>
+        <input type="password" class="text-field w-input" n:name="password" required>
+    </div>
+    <input type="submit" class="button w-button" id="frm-send" value="Přihlásit se">
+{/form}

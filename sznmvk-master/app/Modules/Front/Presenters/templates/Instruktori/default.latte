@@ -1,0 +1,59 @@
+{block title}
+    Seznamovák {date("Y")} | Instruktoři
+{/block}
+
+{block content}
+  <div class="div-block-24">
+    <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" data-doc-height="1" role="banner" class="navbar second tvujucet w-nav">
+      <div class="container w-container">
+        <a href="{plink Homepage:default}" class="brand w-nav-brand">
+          <div class="logo second">SEZNAMOVÁK</div>
+        </a>
+        <nav role="navigation" class="nav-menu second w-nav-menu">
+            <a href="{plink Homepage:default#Program}" class="nav-white second w-nav-link">Informace</a>
+            <a href="{plink Faq:default}" class="nav-white second w-nav-link">Časté dotazy</a>
+            <a href="{plink Historie:default}" class="nav-white second w-nav-link">Minulé ročníky</a>
+            <a href="{plink Instruktori:default}" aria-current="page" class="nav-white second w-nav-link w--current">Instruktoři</a>
+            <a href="{plink Auth:default}" class="button-nav second w-button">Tvoje Přihláška</a>
+        </nav>
+        <div class="menu-button w-nav-button">
+          <div class="icon second w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container-10 w-container">
+      <div class="div-block-25">
+          {if empty($instruktori)}
+              Zatím nebyl přidán žádný instruktor.
+          {else}
+              {var $count = 0}
+              {var $barva = 1}
+              {foreach $instruktori as $instruktor}
+                {if $instruktor->text != "" && $profilePics[$instruktor->user_id] != "../images/instruktori/no_photo.jpg"}
+                  <div class="instruktor">
+                      <div class="div-block-26">
+                        <div class="div-block-27" style='background-image: url("{$profilePics[$instruktor->user_id]|noescape}")'></div>
+                        <div class="div-block-28">
+                            <h3 class="prezdivka">{$instruktor->nickname|firstUpper}</h3>
+                            {if $instruktor->schoolCode}<p>{$instruktor->schoolCode}{if $instruktor->facultyCode} - {$instruktor->facultyCode}{/if}</p>{/if}
+                        </div>
+                      </div>
+                      {if $barva == 1}
+                          <div class="instruktori-tri"></div>
+                          <p class="paragraph-3">{$instruktor->text}</p>
+                      {else}
+                          <div class="instruktori-tri lightblue"></div>
+                          <p class="paragraph-3 lightblue">{$instruktor->text}</p>
+                      {/if}
+
+                      {if $count%2 == 0}
+                          {if $barva == 1}{var $barva = 2}{else}{var $barva = 1}{/if}
+                      {/if}
+                      {var $count = $count + 1}
+                  </div>
+                 {/if} 
+              {/foreach}
+          {/if}
+      </div>
+    </div>
+  </div>

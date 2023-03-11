@@ -1,0 +1,42 @@
+services:
+#    ADMIN
+    - App\Modules\Admin\Components\Applications\ApplicationsGrid\IApplicationsGridFactory
+    - App\Modules\Admin\Components\Applications\ApplicationsLogGrid\IApplicationsLogGridFactory
+    - App\Modules\Admin\Components\Applications\ApplicationPaymentsGrid\IApplicationPaymentsGridFactory
+    - App\Modules\Admin\Components\Applications\CreateApplicationForm\ICreateApplicationFormFactory
+    - App\Modules\Admin\Components\Applications\DeletedApplicationsGrid\IDeletedApplicationsGridFactory
+    - App\Modules\Admin\Components\Applications\EditApplicationForm\IEditApplicationFormFactory
+    - App\Modules\Admin\Components\Applications\NullGenderGrid\INullGenderGridFactory
+    - App\Modules\Admin\Components\Graf\GrafGrid\IGrafGridFactory
+    - App\Modules\Admin\Components\Participants\CampDataGrid\ICampDataGridFactory
+    - App\Modules\Admin\Components\Participants\ParticipantsGrid\IParticipantsGridFactory
+    - App\Modules\Admin\Components\Participants\SwapLodgingGrid\ISwapLodgingGridFactory
+    - App\Modules\Admin\Components\Participants\FreeLodgingGrid\IFreeLodgingGridFactory
+    - App\Modules\Admin\Components\Participants\QueuesGrid\IQueuesGridFactory
+    - App\Modules\Admin\Components\Participants\ZajemciGrid\IZajemciGridFactory
+    - App\Modules\Admin\Components\Payments\AutoAssignPaymentForm\IAutoAssignPaymentFormFactory
+    - App\Modules\Admin\Components\Payments\AssignPaymentForm\IAssignPaymentFormFactory
+    - App\Modules\Admin\Components\Payments\PaymentsGrid\IPaymentsGridFactory
+    - App\Modules\Admin\Components\Payments\PaymentsLogGrid\IPaymentsLogGridFactory
+    - App\Modules\Admin\Components\Settings\PaymentsLimitsGrid\IPaymentsLimitsGridFactory
+    - App\Modules\Admin\Components\Settings\AddLodgingForm\IAddLodgingFormFactory
+    - App\Modules\Admin\Components\Settings\AddSessionForm\IAddSessionFormFactory
+    - App\Modules\Admin\Components\Settings\BonusesGrid\IBonusesGridFactory
+    - App\Modules\Admin\Components\Settings\EditLodgingForm\IEditLodgingFormFactory
+    - App\Modules\Admin\Components\Settings\FacultiesGrid\IFacultiesGridFactory
+    - App\Modules\Admin\Components\Settings\ImportantDatesGrid\IImportantDatesGridFactory
+    - App\Modules\Admin\Components\Settings\LodgingGrid\ILodgingGridFactory
+    - App\Modules\Admin\Components\Settings\SessionsGrid\ISessionsGridFactory
+    - App\Modules\Admin\Components\Settings\TransportsGrid\ITransportsGridFactory
+    - App\Modules\Admin\Components\Settings\ActivitiesGrid\IActivitiesGridFactory
+    - App\Modules\Admin\Components\Settings\ActivityDetailGrid\IActivityDetailGridFactory
+    - App\Modules\Admin\Components\SignInForm\ISignInFormFactory
+    - App\Modules\Admin\Components\Users\AddUserForm\IAddUserFormFactory
+    - App\Modules\Admin\Components\Users\EditUserForm\IEditUserFormFactory
+    - App\Modules\Admin\Components\Users\UsersGrid\IUsersGridFactory
+#    FRONT
+    - App\Modules\Front\Components\AuthEditApplicationForm\IAuthEditApplicationFormFactory
+    - App\Modules\Front\Components\ForgottenForm\IForgottenFormFactory
+    - App\Modules\Front\Components\PrihlaskaRegistrationForm\IPrihlaskaRegistrationFormFactory
+    - App\Modules\Front\Components\RegistrationForm\IRegistrationFormFactory
+    - App\Modules\Front\Components\Sign\SignInForm\ISignInFormFactory

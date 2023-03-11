@@ -1,0 +1,64 @@
+{block title}Administrace | Doplnení pohlaví přihlášky{/block}
+{block content}<div class="row">
+    <div class="col-12">
+        <h1>Doplnení pohlaví přihlášky</h1>
+    </div>
+</div>
+{if $accessToScript}
+    <div class="row">
+        <div class="col-12 action-buttons"><br><br>
+            <a n:href="startGenderScript!" onclick="return sninning();" class="ajax btn btn-success">Spustiť automatické dopĺňanie</a>
+            <br>
+            <div  id="spinner">
+                <br>
+                <div  class="loading">
+                </div>
+                <br>
+                <p>Prebieha automatické doplňovanie</p>
+
+            </div>
+
+        </div>
+    </div>
+{/if}
+<br><br>
+<div class="row">
+    <div class="col-12">
+        <h3>Potrebné doplniť pohlaví</h3>
+        {control nullGenderGrid}
+    </div>
+</div>
+<script>
+    function sninning() {
+        document.getElementById("spinner").style.display = "block";
+    }
+</script>
+<style type="text/css">
+
+    #spinner {
+        display: none;
+
+
+    }
+
+    .loading {
+        border: 5px solid #ccc;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border-top-color: #1ecd97;
+        border-left-color: #1ecd97;
+        animation: spin 1s infinite ease-in;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+

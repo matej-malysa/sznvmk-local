@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<title>{include title}</title>
+	<meta name="robots" content="{ifset nofol}{include nofol|escape}{else}index{/ifset}" />
+	<meta charset="utf-8" />
+	<meta content="Poznej své spolužáky z Brna dříve, než vysoká opravdu začne. Pojeď s námi na Seznamovák, kde zábava bude podle tebe. V ceně máš samozřejmě celodenní vstup do Aqualandu. Můžeš také zajít na wellness, do wakeparku, na paintball nebo zažít profesionální degustaci moravských vín." name="description">
+	<meta content="Pojeď na brněnský Seznamovák do Pasohlávek" property="og:title">
+	<meta content="Poznej své spolužáky z Brna dříve, než vysoká opravdu začne. Pojeď s námi na Seznamovák, kde zábava bude podle tebe. V ceně máš samozřejmě celodenní vstup do Aqualandu. Můžeš také zajít na wellness, do wakeparku, na paintball nebo zažít profesionální degustaci moravských vín." property="og:description">
+	<meta content="Pojeď na brněnský Seznamovák do Pasohlávek" property="twitter:title">
+	<meta content="Poznej své spolužáky z Brna dříve, než vysoká opravdu začne. Pojeď s námi na Seznamovák, kde zábava bude podle tebe. V ceně máš samozřejmě celodenní vstup do Aqualandu. Můžeš také zajít na wellness, do wakeparku, na paintball nebo zažít profesionální degustaci moravských vín." property="twitter:description">
+	<meta property="og:type" content="website">
+	<meta content="summary_large_image" name="twitter:card">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Webflow" name="generator">
+
+	{control css}
+	<script src="https://kit.fontawesome.com/3cc79aee54.js" crossorigin="anonymous"></script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-75099314-1"></script>
+	<script n:syntax="off">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-75099314-1');
+	</script>
+
+	<!-- Facebook Pixel Code -->
+	<script n:syntax="off">
+		!function(f,b,e,v,n,t,s)
+				{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+				n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+				if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+				n.queue=[];t=b.createElement(e);t.async=!0;
+				t.src=v;s=b.getElementsByTagName(e)[0];
+				s.parentNode.insertBefore(t,s)}(window,document,'script',
+				'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '218369555408895');
+		fbq('track', 'PageView');
+	</script>
+	<noscript>
+		<img height="1" width="1" src="https://www.facebook.com/tr?id=218369555408895&ev=PageView&noscript=1"/>
+	</noscript>
+	<!-- End Facebook Pixel Code -->
+</head>
+
+<body>
+	{control js}
+	{snippet flashes}
+		{control flashes}
+	{/snippet}
+	<div id="page">
+		{include content}
+	</div>
+</body>

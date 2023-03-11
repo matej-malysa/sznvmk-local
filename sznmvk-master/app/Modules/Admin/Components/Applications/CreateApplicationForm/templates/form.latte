@@ -1,0 +1,151 @@
+{form form class => "form"}
+    {snippetArea formError}
+    {snippet errors}
+    {var $form = $control['form']}
+    <div n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    {/snippet}
+    <div class="div-block-15">
+        <label for="faculty" class="field-label black">Fakulta</label>
+        <select n:name="faculty" id="faculty" class="w-select">
+            {foreach $facultiesToSelect as $facultyId => $facultyName}
+                <option id="{$facultyId}">{$facultyName}</option>
+            {/foreach}
+        </select>
+    </div>
+    <div class="div-block-15">
+        <label for="firstname" class="field-label black required">Jméno</label>
+        <input type="text" class="text-field w-input" n:name="firstname" required>
+    </div>
+    <div class="div-block-15">
+        <label for="lastname" class="field-label black required">Příjmení</label>
+        <input type="text" class="text-field w-input" n:name="lastname" required>
+    </div>
+    <div class="div-block-15">
+        <label for="email" class="field-label black required">E-mail</label>
+        <input id="email" onchange="changemail()" type="email" class="text-field w-input" n:name="email" required>
+        <span id="Errspan" class="alert-danger" style="display:none; visibility:hidden;">!!! Neplatný email (schránka nenalezena) !!!</span>
+    </div>
+    <div class="div-block-15">
+        <label for="password" class="field-label black">Heslo</label>
+        <input type="password" class="text-field w-input" n:name="password" required>
+    </div>
+    <div class="div-block-15">
+        <label for="birthdate" class="field-label black">Datum nar.</label>
+        <input type="text" class="flatpickr flatpickr-input text-field w-input" n:name="birthdate">
+    </div>
+    <div class="div-block-15">
+        <label for="phone" class="field-label black">Telefon</label>
+        <input type="tel" class="text-field w-input" n:name="phone" data-name="phone" id="phone">
+    </div>
+    <div class="div-block-15">
+        <label for="gender" class="field-label black required">Pohlaví</label>
+        <div class="add-app-radio">
+            {foreach $gendersToSelect as $genderId => $gender}
+                <input type="radio" n:name="gender" id="gender-{$genderId}" value="{$genderId}" style="display: none">
+                <label for="gender-{$genderId}" class="create-radio">{$gender['name']}</label>
+            {/foreach}
+
+        </div>
+    </div>
+    <div class="div-block-15">
+        <label for="session" class="field-label black">Termín</label>
+        <div class="add-app-radio">
+            {foreach $sessionsToSelect as $sessionId => $session}
+                <input type="radio" n:name="session" id="session-{$sessionId}" value="{$sessionId}" style="display: none">
+                <label for="session-{$sessionId}" class="create-radio">{$session['date']}</label>
+            {/foreach}
+        </div>
+    </div>
+    <div class="div-block-15">
+        <label for="transport" class="field-label black">Způsob dopravy</label>
+        <div class="add-app-radio">
+            {foreach $transportsToSelect as $transportId => $transport}
+                <input type="radio" n:name="transport" id="transport-{$transportId}" value="{$transportId}" style="display: none">
+                <label for="transport-{$transportId}" class="create-radio">{$transport['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+    <div class="div-block-15">
+        <label for="bonus" class="field-label black">Bonus</label>
+        <div class="add-app-radio">
+            {foreach $bonusesToSelect as $bonusId => $bonus}
+                <input type="radio" n:name="bonus" id="bonus-{$bonusId}" value="{$bonusId}" style="display: none" {first}checked{/first}>
+                <label for="bonus-{$bonusId}" class="create-radio">{$bonus['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+
+    <div class="h38">
+        <input type="button"  class="mailcheck btn-warning btn-app" value="Založit přihlášku" >
+        <input id="submit" type="submit" n:name="submit" class="btn btn-warning btn-app" style="display:none; visibility:hidden;" value="Založit přihlášku">
+        <input type="submit" n:name="cancel" class="btn btn-danger btn-app next" value="Zrušit" formnovalidate>
+    </div>
+    {/snippetArea}
+{/form}
+
+<script>
+    // Datepicker options for this form
+    $(".flatpickr").flatpickr({
+        locale: "cs",
+        altInput: true,
+        altFormat: "d.m.Y",
+        dateFormat: "Y-m-d",
+        allowInput: true,
+    });
+
+    // Show only localised country names (e.g. Česká republika)
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    for (var i = 0; i < countryData.length; i++) {
+      var country = countryData[i];
+      country.name = country.name.replace(/.+\((.+)\)/,"$1");
+    }
+
+    var phone_number = window.intlTelInput(document.querySelector("#phone"), {
+      separateDialCode: true,
+      onlyCountries:["cz", "sk"],
+      hiddenInput: "full",
+      utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
+
+    // Save phone number with prepended country code (e.g. +420123456789)
+    $("form").submit(function() {
+        var full_number = phone_number.getNumber(intlTelInputUtils.numberFormat.E164);
+        $("input[name='fullPhone']").val(full_number);
+    });
+
+     function changemail() {
+        var boxstyle = document.getElementById("Errspan").style;
+        boxstyle.display = "none";
+        boxstyle.visibility = "hidden";
+    }
+
+    $(".mailcheck").on("click", function(){
+
+        var url ="https://app.mailercheck.com/api/v1/check/single";
+        var token ="";
+        $.ajax( {
+            url: url,
+            type: "POST",
+            headers: {"Authorization": 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWVhYjVmMWI5ZWI3MjMxNGI3MzQ4MTNkMTEwZWQzOWEyM2E1NGIzMzI0MDhmYzI0ZGI5NzUyYTM1OTFkYTk4MWFmN2FlN2YzYmZlYzFiZTgiLCJpYXQiOjE2NTc2OTg4NTEuNDg2NzI0LCJuYmYiOjE2NTc2OTg4NTEuNDg2NzI2LCJleHAiOjE2ODkyMzQ4NTEuNDgyMTM4LCJzdWIiOiIyNTY0NiIsInNjb3BlcyI6W119.mizeE9Yfrzl2wUW_kB4HaBRRnvQaSbFP1e0Ita-UIbfPn4f8TPOwsROON-Z54OtsHtXw9cMQvcHzAmuH5HFNvQ'},
+            data:{
+                "email": document.getElementById('email').value
+            },
+            success: function (response) {
+                if(response.status === "valid")
+                {
+                    document.getElementById("submit").click();
+                }
+                else
+                {
+                    var boxstyle = document.getElementById("Errspan").style;
+                    boxstyle.display = "block";
+                    boxstyle.visibility = "visible";
+                }
+            },
+            error: function (textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

@@ -1,0 +1,17 @@
+{block title}Administrace | Platby{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Přehled plateb</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <a href="{link loadPayments!}" class="btn btn-warning">Nahrát platby z banky</a>
+        <a href="{plink Payments:autoAssign}" class="btn btn-success">Spárovat platby automaticky</a>
+        {snippet grid}
+            {control paymentsGrid}
+        {/snippet}
+    </div>
+</div>

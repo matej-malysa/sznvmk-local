@@ -1,0 +1,22 @@
+{block title}Administrace | Přehled přihlášek{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Přehled přihlášek</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 action-buttons">
+        <a href="{plink Applications:create}" class="btn btn-success">Založit přihlášku</a>
+        <a href="{plink Applications:genderEdit}" class="btn btn-success">Doplniť pohlavie prihlásených</a>
+        <a href="{plink Applications:deleted}" class="btn btn-primary float-right">Smazané přihlášky</a><br><br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {snippet grid}
+            {control applicationsGrid}
+        {/snippet}
+    </div>
+</div>

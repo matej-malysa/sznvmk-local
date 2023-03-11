@@ -1,0 +1,150 @@
+{snippet chart}
+{snippetArea data}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div style="align-content: center">
+
+
+        <div align="center">
+            Typ grafu:
+            <select name="select_graf" onchange="FunctionChangeGraf(this.value)" >
+                <option value=1 {if $graf == 1} selected {/if} >Podané přihlášky</option>
+                <option value=2 {if $graf == 2} selected {/if} >Zaplacená záloha</option>
+                <option value=3 {if $graf == 3} selected {/if} >Zaplacená plná částka</option>
+
+            </select>
+            <a id="link_graf_1" class="ajax" n:href="update! '1', $fac" > </a>
+            <a id="link_graf_2" class="ajax" n:href="update! '2', $fac" > </a>
+            <a id="link_graf_3" class="ajax" n:href="update! '3', $fac" > </a
+        </div>
+        <div align="center">
+            Fakulta:
+            <select name="select_faculty" onchange="FunctionChangeFaculty(this.value)" >
+                <option value="All" {if  $fac== "All"} selected {/if} >Všechny  </option>
+                 {for $x = 1; $x <= count($faculties); $x++}
+                     <option value="{$facultiesCode[$x]}" {if $fac == $facultiesCode[$x]} selected {/if}>{$faculties[$x]}  </option>
+                 {/for}
+            </select>
+            <a id="link_faculty_All" class="ajax" n:href="update! $graf, All" > </a>
+            {for $x = 1; $x <= count($faculties); $x++}
+
+           <a id="link_faculty_{$facultiesCode[$x]}" class="ajax" n:href="update! $graf, $facultiesCode[$x]" ></a>
+            {/for}
+        </div>
+        <div align="center" id="spinner">
+            <div  class="loading">
+            </div>
+        </div>
+        <canvas id="chart" style="margin: auto; width: 80%; visibility: visible"></canvas>
+        <canvas id="chart2" ></canvas>
+
+
+    </div>
+{/snippetArea}
+    <script>
+        function FunctionChangeFaculty(value) {
+            document.getElementById("spinner").style.display = "block";
+            document.getElementById("link_faculty_".concat(value)).click();
+        }
+
+        function FunctionChangeGraf(value) {
+            document.getElementById("spinner").style.display = "block";
+            document.getElementById("link_graf_".concat(value)).click();
+        }
+
+
+        const data = {
+
+            datasets: [{
+                label: {array_keys($Data)[4]},
+                backgroundColor: 'rgb(96, 250, 100)',
+                borderColor: 'rgb(96, 250, 100)',
+                data: {$Data[array_keys($Data)[4]]},
+                order: 5,
+
+            },{
+                label: {array_keys($Data)[3]},
+                backgroundColor: 'rgb(245, 163, 62)',
+                borderColor: 'rgb(245, 163, 62)',
+                data: {$Data[array_keys($Data)[3]]},
+                order: 4,
+
+            },{
+                label: {array_keys($Data)[2]},
+                backgroundColor: 'rgb(96, 207, 250)',
+                borderColor: 'rgb(96, 207, 250)',
+                data: {$Data[array_keys($Data)[2]]},
+                order: 3,
+
+            },{
+                label: {array_keys($Data)[1]},
+                backgroundColor: 'rgb(0, 0, 199)',
+                borderColor: 'rgb(0, 0, 199)',
+                data: {$Data[array_keys($Data)[1]]},
+                order: 2,
+
+            },{
+                label: {array_keys($Data)[0]},
+                backgroundColor: 'rgb(255, 0, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                data: {$Data[array_keys($Data)[0]]},
+                order: 1,
+
+            }]
+        };
+
+
+
+
+        const config = {
+            type: 'line',
+
+            data: data,
+            options: {}
+        };
+
+
+
+        var chart = new Chart(
+            document.getElementById('chart'),
+            config
+        );
+
+
+
+    </script>
+
+
+
+
+<style type="text/css">
+
+    #spinner {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+    .loading {
+        border: 5px solid #ccc;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border-top-color: #1ecd97;
+        border-left-color: #1ecd97;
+        animation: spin 1s infinite ease-in;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+{/snippet}

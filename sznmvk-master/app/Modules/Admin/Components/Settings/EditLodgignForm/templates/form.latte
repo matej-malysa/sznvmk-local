@@ -1,0 +1,73 @@
+{form form class => form}
+    <div n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    <br/><br/><br/>
+    <div class="div-block-15">
+        <label for="name" class="field-label black required">Název</label>
+        {if $cnt1 or $cnt2}Nemôžno editovať pre obsadenosť daného ubytování v Turnuse 1 alebo 2.{/if}
+        <input type="text" class="form-control" n:name="name" {if $cnt1 or $cnt2} readonly{/if}>
+    </div>
+    <div class="div-block-15">
+        <label for="lodgingType" class="field-label black required">Typ ubytování</label>
+        {if $cnt1 or $cnt2}Nemôžno editovať pre obsadenosť daného ubytování v Turnuse 1 alebo 2.{/if}
+        <div class="add-app-radio">
+            {foreach $lodgingTypeToSelect as $lodgingTypeId => $lodgingType}
+                <input type="radio" n:name="type:$lodgingTypeId" id="lodgingType-{$lodgingTypeId}" value="{$lodgingTypeId}" style="display: none" {if $cnt1 or $cnt2} disabled{/if}>
+                <label for="lodgingType-{$lodgingTypeId}" class="create-radio">{$lodgingType['name']}</label>
+            {/foreach}
+
+        </div>
+    </div>
+    <div class="div-block-15">
+        <label for="capacity" class="field-label black required">Kapacita</label>
+        {if $cnt1 or $cnt2}Nemôžno editovať pre obsadenosť daného ubytování v Turnuse 1 alebo 2.{/if}
+        <input type="number" class="form-control" n:name="capacity" min=0 {if $cnt1 or $cnt2} readonly{/if}>
+    </div>
+    <div class="div-block-15">
+        <label for="lodgingSession1" class="field-label black required">Turnus 1</label>
+        {if $cnt1}Nemôžno editovať pre obsadenosť daného ubytování v Turnuse 1.{/if}
+        <div class="div-block-15">
+            <div class="add-app-radio">
+                {foreach $lodgingSession1ToSelect as $lodgingSession1Id => $lodgingSession1}
+                    <input type="radio" n:name="session_1:$lodgingSession1Id" id="lodgingSession1-{$lodgingSession1Id}" value="{$lodgingSession1Id}" style="display: none" {if $cnt1} disabled{/if}>
+                    <label for="lodgingSession1-{$lodgingSession1Id}" class="create-radio">{$lodgingSession1}</label>
+                {/foreach}
+            </div>
+            <div class="add-app-radio">
+                {foreach $lodgingSession1UseToSelect as $lodgingSession1UseId => $lodgingSession1Use}
+                    <input type="radio" n:name="session_1_use:$lodgingSession1UseId" id="lodgingSession1Use-{$lodgingSession1UseId}" value="{$lodgingSession1UseId}" style="display: none" {if $cnt1} disabled{/if}>
+                    <label for="lodgingSession1Use-{$lodgingSession1UseId}" class="create-radio">{$lodgingSession1Use['name']}</label>
+                {/foreach}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="div-block-15">
+        <label for="lodgingSession2" class="field-label black required">Turnus 2</label>
+        {if $cnt2}Nemôžno editovať pre obsadenosť daného ubytování v Turnuse 2.{/if}
+        <div class="div-block-15">
+            <div class="add-app-radio">
+                {foreach $lodgingSession2ToSelect as $lodgingSession2Id => $lodgingSession2}
+                    <input type="radio" n:name="session_2:$lodgingSession2Id" id="lodgingSession2-{$lodgingSession2Id}" value="{$lodgingSession2Id}" style="display: none" {if $cnt2} disabled{/if}>
+                    <label for="lodgingSession2-{$lodgingSession2Id}" class="create-radio">{$lodgingSession2}</label>
+                {/foreach}
+            </div>
+            <div class="add-app-radio">
+                {foreach $lodgingSession2UseToSelect as $lodgingSession2UseId => $lodgingSession2Use}
+                    <input type="radio" n:name="session_2_use:$lodgingSession2UseId" id="lodgingSession2Use-{$lodgingSession2UseId}" value="{$lodgingSession2UseId}" style="display: none" {if $cnt2} disabled{/if}>
+                    <label for="lodgingSession2Use-{$lodgingSession2UseId}" class="create-radio">{$lodgingSession2Use['name']}</label>
+                {/foreach}
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <input type="submit" name="send" class="btn btn-success form-submit" value="Uložit ubytování">
+        <input type="submit" name="cancel" class="btn btn-danger form-submit next" value="Zrušit" formnovalidate>
+    </div>
+{/form}

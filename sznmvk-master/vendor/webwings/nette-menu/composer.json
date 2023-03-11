@@ -1,0 +1,38 @@
+{
+	"name": "webwings/nette-menu",
+	"type": "library",
+	"description": "Menu for Nette framework",
+	"keywords": ["nette", "menu", "control", "component", "breadcrumbs"],
+	"homepage": "https://github.com/Carrooi/Nette-Menu",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "David Kudera",
+			"homepage": "http://davidkudera.com",
+			"email": "kudera.d@gmail.com"
+		},
+		{
+			"name": "Webwings s.r.o",
+			"homepage": "http://www.webwings.cz"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/webwingscz/Nette-Menu/issues"
+	},
+	"require": {
+		"php": ">=7.1",
+		"nette/di": "^3.0",
+		"nette/utils": "^3.0",
+		"nette/application": "^3.0",
+		"nette/http": "^3.0"
+	},
+	"require-dev": {
+		"nette/tester": "^1.7",
+		"mockery/mockery": "dev-master"
+	},
+	"autoload": {
+		"psr-0": {
+			"Carrooi\\Menu\\": "src/"
+		}
+	}
+}

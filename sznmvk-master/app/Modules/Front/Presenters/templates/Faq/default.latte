@@ -1,0 +1,90 @@
+{block title}
+  Seznamovák {date("Y")} | FAQ
+{/block}
+
+{block content}
+  <div class="div-block-20">
+    <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" data-doc-height="1" role="banner" class="navbar second tvujucet w-nav">
+      <div class="container w-container">
+        <a href="{plink Homepage:default}" class="brand w-nav-brand">
+          <div class="logo second">SEZNAMOVÁK</div>
+        </a>
+        <nav role="navigation" class="nav-menu second w-nav-menu">
+            <a href="{plink Homepage:default#Program}" class="nav-white second w-nav-link">Informace</a>
+            <a href="{plink Faq:default}" aria-current="page" class="nav-white second w-nav-link w--current">Časté dotazy</a>
+            <a href="{plink Historie:default}" class="nav-white second w-nav-link">Minulé ročníky</a>
+            <a href="{plink Instruktori:default}" class="nav-white second w-nav-link">Instruktoři</a>
+            <a href="{plink Auth:default}" class="button-nav second w-button">Tvoje Přihláška</a>
+        </nav>
+        <div class="menu-button w-nav-button">
+          <div class="icon second w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container-8 w-container">
+      <div class="faqdotaz">
+        <h4>Je možné přihlášku na Seznamovák upravovat i po jejím odeslání?</h4>
+        <p>Ano, svou přihlášku můžeš upravovat až do {$deadlines[App\Model\ImportantDatesModel::KONEC_EDITACI]['deadline']|date: 'd.m.Y'} v sekci "Tvoje Přihláška", kam se můžeš jednoduše přihlásit pomocí údajů, které ti přišly e-mailem. Můžeš zde upravit zvolený termín anebo způsob dopravy. Pokud budeš mít s čímkoliv problém, neváhej se nám <a href=mailto:jsme@seznamovak.org>ozvat</a>.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Co když mám během Seznamováku registraci nebo zápis předmětů?</h4>
+        <p>Není problém, obojí zvládneš i na Seznamováku. V kempu je k dispozici WiFi a navíc spoustu instruktorů, kteří ti rádi poradí. Dost možná na to také nebudeš sám a potkáš budoucí spolužáky, kteří budou řešit totéž.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Kolik si mám vzít na Seznamovák peněz? Najdu v areálu bankomat?</h4>
+        <p>Doporučujeme vzít si 1 500 – 2 000 Kč v závislosti na tom, jestli budeš chtít chodit každý den na oběd do restaurace, vyzkoušet všechny doplňkové aktivity nebo ochutnat všechny drinky na vodním baru. V areálu se nachází i bankomat, takže není problém kdykoliv doplnit stav své peněženky.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Co bych si neměl/a zapomenout sbalit?</h4>
+        <p>Co se oblečení týče, tak si na tenhle vysokoškolský Seznamovák určitě nezapomeň něco sportovního a pohodlného, co se může případně trochu ušpinit. Do Aqualandu potom plavky a osušku, něco teplejšího navečer a nakonec něco peprnějšího na večerní party. V bungalovech jsou k dispozici jak peřiny, tak povlečení, spacák proto není třeba.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Je v kempu obchod?</h4>
+        <p>V kempu je malinký obchůdek, kde se dá případně koupit to nejnutnější, avšak ceny jsou o něco vyšší. Další obchody se nachází až mimo kemp, čili je lepší zásobit se z domu.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Kde se můžu v kempu najíst/možnosti stravování?</h4>
+        <p>Snídaně i večeře jsou součástí polopenze a jsou už zahrnuty v ceně Seznamováku. V případě zájmu si od nás na místě můžeš doobjednat obědy za zvýhodněnou cenu v restauraci, která se nám stará o polopenze anebo můžeš vyzkoušet kteroukoliv z restaurací v kempu. Každý bungalov je vybaven kuchyňkou se základním vybavením (rychlovarná konvice, lednička) pro případ, že by sis chtěl vařit sám.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Pokud mám nějaký typ speciální stravy (dieta, vegetarián, …), musím si stravování zařídit sám/sama, nebo mám někoho kontaktovat?</h4>
+        <p>V takovém případě se na nás neváhej obrátit na e-mail <a href=mailto:jsme@seznamovak.org>jsme@seznamovak.org</a> nejpozději {$deadlines[App\Model\ImportantDatesModel::KONEC_EDITACI]['deadline']|date: 'd.m.Y'} a my se budeme snažit ti se vším vyhovět.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Můžu jet na oba termíny Seznamováku?</h4>
+        <p>Samozřejmě můžeš, rádi se uvidíme na obou! Pro každý turnus musíš ale vyplnit každou přihlášku zvlášť.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Můžu na Seznamovák přijet i když nebudu studovat v Brně?</h4>
+        <p>Určitě můžeš! Jsme rádi, že máš o Seznamovák zájem a rádi tě tu přivítáme.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Můžu s sebou na Seznamovák vzít kamarády nebo svého přítele/svou přítelkyni?</h4>
+        <p>Můžeš, rádi tvou drahou polovičku uvítáme, i když třeba nestuduje v Brně. Podmínkou účasti je ovšem věk vyšší 18 let.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Jaký je můj variabilní symbol pro platbu na Seznamovák?</h4>
+        <p>Při platbě použij své telefonní číslo bez předvolby (není nutné psát +420 nebo +421). Tvůj variabilní symbol by měl tedy obsahovat pouze 9 číslic bez mezer.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Co mám dělat, když jsem Seznamovák zaplatil/a, ale v sekci "Tvoje Přihláška" není platba potvrzena?</h4>
+        <p>Nejdříve ještě jednou pro jistotu zkontroluj číslo účtu, kam jsi platbu zaslal/a, a svůj variabilní symbol. Pokud je vše v pořádku, napiš nám na e-mail <a href=mailto:jsme@seznamovak.org>jsme@seznamovak.org</a>. Do e-mailu uveď své číslo účtu a datum, kdy byla platba provedena.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Když na Seznamováku něco ztratím, mám šanci to získat zpět?</h4>
+        <p>Poté, co celý kemp pořádně uklidíme, dáme dohromady nalezené poklady a rozhodně jim uděláme reklamu na skupině na Facebooku, aby je měl vlastník šanci znovu získat. K hromadnému předání dochází tradičně na seznamovácké Afterparty.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Budou ze Seznamováku nějaké fotky?</h4>
+        <p>Ano, každý rok máme hned několik šikovných fotografů a fotky tradičně zveřejňujeme na našem Facebooku.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Co mám dělat pokud se Seznamovaku nemohu účastnit?</h4>
+        <p>Pokud se nemůžeš Seznamováku účastnit, tak nás to sice mrzí, ale nic se neděje. Pro vrácení zálohy se na nás můžeš obracet do 31. 7. na e-mailu: <a href=mailto:jsme@seznamovak.org>jsme@seznamovak.org</a>, pro vrácení doplatku se na nás můžeš obracet do 20. 8. na stejném e-mailu. Po těchto termínech už za tebe platíme vše potřebné a platby již bohužel nelze vrátit.</p>
+      </div>
+      <div class="faqdotaz">
+        <h4>Máš jinou otázku, na kterou jsi zde nenašel odpověď?</h4>
+        <p>Neváhej se na nás se svým dotazem obrátit, ať už na <a href="https://urlgeni.us/facebook/UlCF" target="_blank">Facebooku</a> nebo <a href=mailto:jsme@seznamovak.org>e-mailem</a>.</p>
+      </div>
+    </div>
+  </div>

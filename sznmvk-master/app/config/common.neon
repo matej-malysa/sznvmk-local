@@ -1,0 +1,54 @@
+parameters:
+
+
+application:
+    errorPresenter: Error:Error
+    mapping:
+        *: App\Modules\*\Presenters\*Presenter
+
+
+session:
+    debugger: true
+    expiration: 14 days
+
+services:
+    authorizator: App\Classes\Nette\Security\Authorizator
+    dibi.connection: Dibi\Connection(%dibi%, "dibi")
+    dibi.panel: Dibi\Bridges\Tracy\Panel
+    mailService: App\Classes\Mail\MailService
+    mailerSendService: App\Classes\MailerSend\MailerSendService
+    messageCenter: App\Classes\Mail\MessageCenter
+    router: App\Router\RouterFactory::createRouter
+
+    cssLoader:
+        implement: App\Components\CssLoader\ICssLoaderFactory
+        arguments: [%wwwDir%]
+
+    jsLoader:
+        implement: App\Components\JsLoader\IJsLoaderFactory
+        arguments: [%wwwDir%]
+
+    flashesFactory:
+        implement: App\Components\Flashes\IFlashesFactory
+
+extensions:
+    monolog: Contributte\Monolog\DI\MonologExtension
+    menu: Carrooi\Menu\DI\MenuExtension
+    fioExtension: h4kuna\Fio\Nette\DI\FioExtension
+
+monolog:
+    channel:
+        default:
+            handlers:
+                - Monolog\Handler\RotatingFileHandler(%appDir%/../log/syslog.log, 30, Monolog\Logger::WARNING)
+            processors:
+                -  Monolog\Processor\MemoryPeakUsageProcessor()
+
+fioExtension:
+    account: 2200430629/2010
+    token: 8Sd8pvPo0P5L8L3vqZrThCIKzJDW4tRXe86v2xdKudd14TToc0XGImSpoGPUF1Z3
+
+includes:
+    - menu/admin.neon
+    - models.neon
+    - factories.neon

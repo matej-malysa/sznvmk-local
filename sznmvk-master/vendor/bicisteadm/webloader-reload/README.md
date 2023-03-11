@@ -1,0 +1,123 @@
+﻿WebLoader-Reload
+=======================
+
+Component for CSS and JS files loading
+
+WebLoader-Reload is an updated WebLoader package by [janmarek](https://github.com/janmarek) for the latest version of Nette (Nette-3.0).
+Also contains some bug fixes.
+
+Big thanks to [Gappa](https://github.com/Gappa), who updated the package for Nette-3.0.
+
+Author: Jan Marek
+Licence: MIT
+
+Example
+-------
+
+Control factory in Nette presenter:
+
+```php
+<?php
+
+protected function createComponentCss()
+{
+	$files = new WebLoader\FileCollection(WWW_DIR . '/css');
+	$files->addFiles(array(
+		'style.css',
+		WWW_DIR . '/colorbox/colorbox.css',
+	));
+
+	$files->addWatchFiles(Finder::findFiles('*.css', '*.less')->in(WWW_DIR . '/css'));
+
+	$compiler = WebLoader\Compiler::createCssCompiler($files, WWW_DIR . '/temp');
+
+	$compiler->addFilter(new WebLoader\Filter\VariablesFilter(array('foo' => 'bar')));
+	$compiler->addFilter(function ($code) {
+		return cssmin::minify($code, "remove-last-semicolon");
+	});
+
+	$control = new WebLoader\Nette\CssLoader($compiler, '/webtemp');
+	$control->setMedia('screen');
+
+	return $control;
+}
+```
+
+Template:
+
+```html
+{control css}
+```
+
+Example with Nette Framework extension used
+-------------------------------------------
+
+Configuration in `app/config/config.neon`:
+
+```html
+extensions:
+	webloader: WebLoader\Nette\Extension
+
+services:
+	wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%)
+	lessFilter: WebLoader\Filter\LessFilter
+	jwlCssMinFilter: Joseki\Webloader\CssMinFilter
+
+webloader:
+	css:
+		default:
+			files:
+				- style.css
+				- {files: ["*.css", "*.less"], from: %appDir%/presenters} # Nette\Utils\Finder support
+			filters:
+				- @jwlCssMinFilter
+			fileFilters:
+				- @lessFilter
+				- @wlCssFilter
+			watchFiles:		# only watch modify file
+				- {files: ["*.css", "*.less"], from: css}
+				- {files: ["*.css", "*.less"], in: css}
+
+	js:
+		default:
+			remoteFiles:
+				- http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js
+				- http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js
+			files:
+				- %appDir%/../libs/nette/nette/client-side/netteForms.js
+				- web.js
+```
+
+For older versions of Nette, you have to register the extension in `app/bootstrap.php`:
+
+```php
+$webloaderExtension = new \WebLoader\Nette\Extension();
+$webloaderExtension->install($configurator);
+```
+
+Usage in `app/presenters/BasePresenter.php`:
+
+```php
+	/** @var \WebLoader\Nette\LoaderFactory @inject */
+	public $webLoader;
+
+	/** @return \WebLoader\Nette\CssLoader */
+	protected function createComponentCss()
+	{
+		return $this->webLoader->createCssLoader('default');
+	}
+
+	/** @return \WebLoader\Nette\JavaScriptLoader */
+	protected function createComponentJs()
+	{
+		return $this->webLoader->createJavaScriptLoader('default');
+	}
+```
+
+
+Template:
+
+```html
+{control css}
+{control js}
+```

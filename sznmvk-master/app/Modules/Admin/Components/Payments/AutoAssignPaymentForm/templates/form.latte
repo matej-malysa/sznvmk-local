@@ -1,0 +1,19 @@
+{form form class => "form form-autoassign"}
+    {snippet errors}
+        {var $form = $control['form']}
+        <div n:if="$form->hasErrors()">
+            {$form->render('errors')|noescape}
+        </div>
+    {/snippet}
+    {foreach $form[payments]->items as $key => $label}
+        <div class="form-group-b0">
+            <label n:name="payments:$key"><input n:name="payments:$key" value="{$key}" checked> {$label}</label>
+        </div>
+    {/foreach}
+
+    <div class="form-row">
+        <input type="submit" name="send" class="btn btn-success form-submit" value="Přiřadit platby">
+        <input type="submit" name="cancel" class="btn btn-danger form-submit next" value="Zrušit" formnovalidate>
+    </div>
+
+{/form}

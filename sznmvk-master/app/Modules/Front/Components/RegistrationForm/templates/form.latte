@@ -1,0 +1,105 @@
+{form form class => "form"}
+    <div id="w-node-08c9cb158479-53999b15" class="div-block-15">
+        <label for="firstname" class="field-label">Jméno</label>
+        <input type="text" class="text-field w-input" n:name="firstname" required>
+    </div>
+    <div id="w-node-19fa9188a339-53999b15" class="div-block-15">
+        <label for="lastname" class="field-label">Příjmení</label>
+        <input type="text" class="text-field w-input" n:name="lastname" required>
+    </div>
+    <div id="w-node-bc96e6cec66a-53999b15" class="div-block-15">
+        <label for="birthdate" class="field-label">Datum nar.</label>
+        <input type="text" class="flatpickr flatpickr-input text-field date w-input" n:name="birthdate" value="2001-01-01">
+    </div>
+
+    <div id="w-node-c76ddee5f870-53999b15" class="div-block-15">
+        <label for="phone" class="field-label">Telefon</label>
+        <input type="tel" class="text-field w-input" n:name="phone" data-name="phone" id="phone" required>
+    </div>
+    <div id="w-node-435bc455aeee-53999b15" class="div-block-15">
+        <label for="email" class="field-label">E-mail</label>
+        <input type="email" class="text-field w-input" n:name="email" required>
+    </div>
+    <div id="w-node-3c43479a71f8-53999b15" class="div-block-15 mobil">
+        <label for="password" class="field-label">Tvé heslo</label>
+        <input type="password" class="text-field w-input" n:name="password" required>
+    </div>
+    <div id="w-node-c76ddee5f87-53999b15" class="div-block-15 t32">
+        <label for="faculty" class="field-label">Fakulta</label>
+        <select n:name="faculty" class="w-select">
+            {foreach $facultiesToSelect as $facultyId => $facultyName}
+                <option value="{$facultyId}">{$facultyName}</option>
+            {/foreach}
+        </select>
+    </div>
+    <div id="w-node-WTFID-53999b15" class="div-block-15">
+        <label for="gender" class="field-label fix">Pohlaví</label>
+        <div class="div-block-16">
+            {foreach $gendersToSelect as $genderId => $gender}
+                <input type="radio" n:name="gender" id="gender-{$genderId}" value="{$genderId}" style="display: none" {first}checked{/first}>
+                <label for="gender-{$genderId}" class="radio-prihlaska w-button">{$gender['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+    <div id="w-node-fd93dafdfb69-53999b15" class="div-block-15">
+        <label for="session" class="field-label fix">Termín</label>
+        <div class="div-block-16">
+            {foreach $sessionsToSelect as $sessionId => $session}
+                <input type="radio" n:name="session" id="session-{$sessionId}" value="{$sessionId}" style="display: none" {first}checked{/first}>
+                <label for="session-{$sessionId}" class="radio-prihlaska w-button">{$session['date']}</label>
+            {/foreach}
+        </div>
+    </div>
+    <div id="w-node-31a9d6f7c8e0-53999b15" class="div-block-15">
+        <label for="transport" class="field-label fix">Doprava</label>
+        <div class="div-block-16">
+            {foreach $transportsToSelect as $transportType}
+                <input type="radio" n:name="transport" id="transport-{$transportType->id}" value="{$transportType->id}" style="display: none" {first}checked{/first}>
+                <label for="transport-{$transportType->id}" class="radio-prihlaska w-button">{$transportType->name}</label>
+            {/foreach}
+        </div>
+    </div>
+    <p id="w-node-42f97f026c5c-53999b15" class="white odsazeni">
+        Odesláním formuláře nám dáváš svůj souhlas se zpracováním osobních údajů. Tvé osobní údaje chráníme jako oko v&nbsphlavě a&nbspsamozřejmě s&nbspnimi budeme nakládat v&nbspsouladu se zákonem a&nbsppouze pro potřeby akce &quot;Seznamovák&quot;.
+    </p>
+    <label id="w-node-670835450f43-53999b15" class="w-checkbox checkbox-field">
+        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+        <input type="checkbox" n:name="gdpr" required style="opacity:0;position:absolute;z-index:-1">
+        <span class="checkbox-label w-form-label">Souhlasím se zpracováním osobních údajů</span>
+    </label>
+    <input type="submit" value="Odeslat nezávaznou přihlášku" data-wait="Please wait..." id="w-node-aad1cf0176fe-53999b15" class="button odsazeni w-button">
+    <div class="white" n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+  <div n:if="$form->isSuccess()"><script n:syntax="off">fbq('track', 'CompleteRegistration');</script></div>
+{/form}
+
+<script>
+    // Datepicker options for this form
+    $(".flatpickr").flatpickr({
+        locale: "cs",
+        altInput: true,
+        altFormat: "d.m.Y",
+        dateFormat: "Y-m-d",
+    });
+
+    // Show only localised country names (e.g. Česká republika)
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    for (var i = 0; i < countryData.length; i++) {
+      var country = countryData[i];
+      country.name = country.name.replace(/.+\((.+)\)/,"$1");
+    }
+
+    var phone_number = window.intlTelInput(document.querySelector("#phone"), {
+      separateDialCode: true,
+      onlyCountries:["cz", "sk"],
+      hiddenInput: "full",
+      utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
+
+    // Save phone number with prepended country code (e.g. +420123456789)
+    $("form").submit(function() {
+        var full_number = phone_number.getNumber(intlTelInputUtils.numberFormat.E164);
+        $("input[name='fullPhone'").val(full_number);
+    });
+</script>

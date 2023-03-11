@@ -1,0 +1,17 @@
+{block title}Administrace | Uživatelé systému{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Uživatelé systému</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <a href="{plink Users:create}" class="btn btn-primary">Přidat instruktora/uživatele systému</a><br><br>
+
+        {snippet grid}
+            {control usersGrid}
+        {/snippet}
+    </div>
+</div>

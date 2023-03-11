@@ -1,0 +1,20 @@
+{block title}Administrace | Smazané přihlášky{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12">
+        <h1>Smazané přihlášky</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 action-buttons">
+        <a href="{plink Applications:default}" class="btn btn-primary float-right">Zpět</a><br><br>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        {snippet grid}
+            {control deletedApplicationsGrid}
+        {/snippet}
+    </div>
+</div>

@@ -1,0 +1,13 @@
+parameters:
+	autoload_directories:
+		 - WebLoader/
+
+	paths:
+		- WebLoader/
+
+	level: 7
+
+
+includes:
+	- ../vendor/phpstan/phpstan-nette/extension.neon
+	- ../vendor/phpstan/phpstan-nette/rules.neon

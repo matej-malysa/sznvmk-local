@@ -1,0 +1,46 @@
+{block title}
+	Seznamovák {date("Y")} | Historie
+{/block}
+
+{block content}
+  <div class="div-block-22">
+    <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" data-doc-height="1" role="banner" class="navbar second tvujucet w-nav">
+      <div class="container w-container">
+        <a href="{plink Homepage:default}" class="brand w-nav-brand">
+          <div class="logo second">SEZNAMOVÁK</div>
+        </a>
+        <nav role="navigation" class="nav-menu second w-nav-menu">
+            <a href="{plink Homepage:default#Program}" class="nav-white second w-nav-link">Informace</a>
+            <a href="{plink Faq:default}" class="nav-white second w-nav-link">Časté dotazy</a>
+            <a href="{link default}" aria-current="page" class="nav-white second w-nav-link w--current">Minulé ročníky</a>
+            <a href="{plink Instruktori:default}" class="nav-white second w-nav-link">Instruktoři</a>
+            <a href="{plink Auth:default}" class="button-nav second w-button">Tvoje Přihláška</a>
+        </nav>
+        <div class="menu-button w-nav-button">
+          <div class="icon second w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container-9 w-container">
+      <h1 class="minulerocnikytitle b40">Seznamovák má už 10 let. Podívej se, jak vypadaly předchozí ročníky</h1>
+      <div class="div-block-23">
+        <div class="rocnik _2021"><a href="{link kronika2021}" id="kronika" class="button minrok w-button">Zobrazit ročník 2021</a></div>
+        <div class="rocnik _2020"><a href="{link kronika2020}" id="kronika" class="button minrok w-button">Zobrazit ročník 2020</a></div>
+        <div class="rocnik _2019"><a href="{link kronika2019}" id="kronika" class="button minrok w-button">Zobrazit ročník 2019</a></div>
+        <div class="rocnik _2018"><a href="{link kronika2018}" id="kronika" class="button minrok w-button">Zobrazit ročník 2018</a></div>
+        <div class="rocnik _2017"><a href="{link kronika2017}" id="kronika" class="button minrok w-button">Zobrazit ročník 2017</a></div>
+        <div class="rocnik _2016"><a href="{link kronika2016}" id="kronika" class="button minrok w-button">Zobrazit ročník 2016</a></div>
+        <div class="rocnik _2015"><a href="{link kronika2015}" id="kronika" class="button minrok w-button">Zobrazit ročník 2015</a></div>
+        <div class="rocnik _2014"><a href="{link kronika2014}" id="kronika" class="button minrok w-button">Zobrazit ročník 2014</a></div>
+        <div class="rocnik _2013"><a href="{link kronika2013}" id="kronika" class="button minrok w-button">Zobrazit ročník 2013</a></div>
+        <div class="rocnik _2012"><a href="{link kronika2012}" id="kronika" class="button minrok w-button">Zobrazit ročník 2012</a></div>
+        <div class="rocnik _2011"><a href="{link kronika2011}" id="kronika" class="button minrok w-button">Zobrazit ročník 2011</a></div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  document.getElementById('kronika').addEventListener('click', function() {
+    fbq('track', 'ViewContent');
+  }, false);
+</script>

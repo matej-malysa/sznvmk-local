@@ -1,0 +1,31 @@
+{block title}
+    Seznamovák {date("Y")} | Editovat moji přihlášku
+{/block}
+
+{block content}
+<div class="modra login" style="height: 100%">
+    <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" data-doc-height="1" role="banner" class="navbar third login w-nav">
+        <div class="container w-container">
+            <a href="{plink Homepage:default}" aria-current="page" class="brand w-nav-brand w--current">
+                <div class="logo">SEZNAMOVÁK</div>
+            </a>
+            <nav role="navigation" class="nav-menu w-nav-menu">
+                <a href="{plink Homepage:default#Program}" class="nav-white w-nav-link">Informace</a>
+                <a href="{plink Faq:default}" class="nav-white w-nav-link">Časté dotazy</a>
+                <a href="{plink Historie:default}" class="nav-white w-nav-link">Minulé ročníky</a>
+                <a href="{plink Instruktori:default}" class="nav-white w-nav-link">Instruktoři</a>
+                <a href="{plink Auth:default}" class="button-nav w-button">Tvoje Přihláška</a>
+            </nav>
+            <div class="menu-button w-nav-button">
+                <div class="icon w-icon-nav-menu"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container-10 w-container">
+        <h2 class="white t40 b32">Editovat moji přihlášku</h2>
+
+        <div class="div-block-9 down">
+        {control authEditApplicationForm}
+        </div>
+    </div>
+</div>

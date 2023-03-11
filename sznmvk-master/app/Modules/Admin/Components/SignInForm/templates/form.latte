@@ -1,0 +1,16 @@
+{form form class => form}
+    <div n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    <div class="div-block-15">
+        <label for="username" class="field-label black required">Uživatelské jméno</label>
+        <input type="text" class="form-control" n:name="username" required>
+    </div>
+    <div class="div-block-15">
+        <label for="password" class="field-label black required">Heslo</label>
+        <input type="password" class="form-control" n:name="password" {*required*}>
+    </div>
+    <div class="form-row">
+        <input type="submit" n:name="submit" class="btn btn-success form-submit" value="Přihlásit se">
+    </div>
+{/form}

@@ -1,0 +1,51 @@
+{
+	"name": "jbelza/sznmvk",
+	"description": "New frontend and backend administration system for Seznamovak Brno",
+	"homepage": "https://seznamovak.org",
+	"type": "project",
+	"license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
+	"authors": [
+		{
+			"name": "Jaroslav Belza"
+		}
+	],
+	"repositories": [
+		{
+			"type": "github",
+			"url": "https://github.com/webwingscz/nette-menu"
+		}
+	],
+	"require": {
+		"php": "8.0.1",
+		"nette/nette": "^3.0",
+		"latte/latte": "^2.5",
+		"tracy/tracy": "^2.6",
+		"dg/adminer-custom": "^1.6",
+		"dibi/dibi": "^4.2",
+		"contributte/monolog": "^0.5",
+		"nextras/form-components": "^1.0",
+		"bicisteadm/webloader-reload": "^3.0",
+		"tedivm/jshrink": "^v1.3.3",
+		"natxet/cssmin": "^v3.0.6",
+		"webwings/nette-menu": "^3.0",
+		"ublaboo/datagrid": "^6.6",
+		"h4kuna/fio-nette": "^2.0",
+		"nextras/secured-links": "^1.7",
+		"xsuchy09/nette-csv-response": "^0.4.0",
+		"php-http/guzzle7-adapter": "^1.0",
+		"nyholm/psr7": "^1.5",
+		"mailersend/mailersend": "^0.5.0"
+	},
+	"require-dev": {
+		"phpstan/phpstan-nette": "^0.12"
+	},
+	"autoload": {
+		"psr-4": {
+			"App\\": "app"
+		}
+	},
+	"minimum-stability": "stable",
+	"scripts": {
+		"phpstan": "phpstan analyse --configuration app/config/phpstan.neon app www"
+	}
+}

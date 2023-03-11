@@ -1,0 +1,56 @@
+{form form class => [form, dropzone]}
+    <div n:if="$form->hasErrors()">
+        {$form->render('errors')|noescape}
+    </div>
+    <fieldset>
+        <legend class="t40">Uživatelské informace</legend><br>
+        <div class="div-block-15">
+            <label for="username" class="field-label black required">Uživatelské jméno</label>
+            <input type="text" class="text-field w-input" n:name="username" disabled>
+        </div>
+        {if $leader}
+            <div class="div-block-15">
+                <label for="password" class="field-label black required">Heslo</label>
+                <input type="text" class="text-field w-input" n:name="password">
+            </div>
+            <div class="div-block-15">
+                <label for="role" class="field-label black required">Uživatelská role</label>
+                <select n:name="role" id="role" class="w-select">
+                    {foreach $rolesToSelect as $key => $value}
+                        <option value={$key}>{$value}</option>
+                    {/foreach}
+                </select>
+            </div>
+        {/if}
+    </fieldset>
+    <fieldset id="instructors-info">
+        <legend class="t24">Instruktorské informace</legend><br>
+        <div class="div-block-15">
+            <label for="faculty" class="field-label black required">Fakulta</label>
+            <select class="w-select" n:name="faculty">
+                {foreach $facultiesToSelect as $key => $value}
+                    <option value={$key}>{$value}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="div-block-15">
+            <label for="nickname" class="field-label black">Přezdívka</label>
+            <input type="text" class="text-field w-input" n:name="nickname" required>
+        </div>
+        <div class="div-block-15">
+            <label for="text" class="field-label black">Představení</label>
+            <textarea class="form-control" n:name="text" rows=2></textarea>
+        </div>
+        <div class="div-block-15">
+            <label for="photo" class="field-label black t24">Profilový obrázek</label>
+            {if !empty($profilePic)}
+                <br><small style="color: red">Instruktor již má nahraný profilový obrázek, nový upload jej přepíše!</small>
+            {/if}
+            <input type="file" n:name="photo" class="form-control-file">
+        </div>
+    </fieldset>
+    <div class="h38">
+        <input type="submit" n:name="send" class="btn btn-warning btn-app" value="Uložit uživatele">
+        <input type="submit" n:name="cancel" class="btn btn-danger btn-app next" value="Zrušit" formnovalidate>
+    </div>
+{/form}

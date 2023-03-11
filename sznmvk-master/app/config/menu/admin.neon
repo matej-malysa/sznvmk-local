@@ -1,0 +1,164 @@
+menu:
+    admin:
+        authorizator: App\Classes\Nette\Security\MenuAuthorizator
+        templates:
+            menu: %appDir%/Modules/Admin/Components/Menu/menu.latte
+        items:
+            Přihlášky:
+                action: Admin:Applications:default
+                data:
+                    icon: fas fa-money-check
+                    resources: applications
+                items:
+                    Vytvořit přihlášku:
+                        action: Admin:Applications:create
+                        visibility:
+                            menu: false
+                    Detail:
+                        action: Applications:detail
+                        visibility:
+                            menu: false
+                    Upravit přihlášku:
+                        action: Applications:edit
+                        visibility:
+                            menu: false
+                    Smazané přihlášky:
+                        action: Applications:deleted
+                        visibility:
+                            menu: false
+                    Upraviť pohlavie:
+                        action: Applications:genderEdit
+                        visibility:
+                            menu: false
+            Graf:
+                action: Admin:Graf:default
+                data:
+                    icon: fas fa-chart-line
+                    resources: graf
+            Platby:
+                action: Admin:Payments:default
+                data:
+                    icon: fas fa-money-bill-alt
+                    resources: payments
+                items:
+                    Přiřadit platbu:
+                        action: Payments:assign
+                        visibility:
+                            menu: false
+                    Přiřadit platby hromadně:
+                        action: Payments:autoAssign
+                        visibility:
+                            menu: false
+                    Detail platby:
+                        action: Payments:detail
+                        visibility:
+                            menu: false
+
+            Účastníci:
+                action: Admin:Participants:default
+                data:
+                    icon: fas fa-users
+                    resources: participants
+                items:
+                    Statistiky:
+                        action: Admin:Participants:default
+                        data:
+                            icon: fas fa-users
+                    Potvrzení účastníci:
+                        action: Admin:Participants:confirmed
+                        data:
+                            icon: fas fa-check-circle
+                    Zmena ubytovania:
+                        action: Participants:changeLodging
+                        visibility:
+                            menu: false
+                    Pořadníky:
+                        action: Admin:Participants:queues
+                        data:
+                            icon: fas fa-pray
+                    Zájemci:
+                        action: Admin:Participants:zajemci
+                        data:
+                            icon: far fa-question-circle
+
+            Data pro kemp:
+                action: Admin:Participants:campData
+                data:
+                    icon: fas fa-campground
+                    resources: camp_data
+            Exporty:
+                action: Admin:Exports:default
+                data:
+                    icon: fas fa-file-export
+                    resources: exports
+                items:
+                    Emaily nezaplacených přihlášek:
+                        action: Admin:Exports:applicationsNotPaid
+                        visibility:
+                            menu: false
+
+            Instruktoři/Uživatelé:
+                action: Admin:Users:default
+                data:
+                    icon: far fa-grin-beam
+                    resources: instructors
+                items:
+                    Přidat uživatele systému:
+                        action: Users:create
+                        visibility:
+                            menu: false
+                    Upravit uživatele systému:
+                        action: Users:edit
+                        visibility:
+                            menu: false
+            Nastavení:
+                data:
+                    icon: fas fa-sliders-h
+                    resources: settings
+                items:
+                    Fakulty:
+                        action: Admin:Settings:faculties
+                        data:
+                            icon: fas fa-graduation-cap
+                    Turnusy:
+                        action: Admin:Settings:sessions
+                        data:
+                            icon: far fa-calendar-alt
+                        items:
+                            Přidat turnus:
+                                action: Admin:Settings:addSession
+                                visibility:
+                                    menu: false
+                    Důležité termíny:
+                        action: Admin:Settings:importantDates
+                        data:
+                            icon: fas fa-exclamation-triangle
+                    Cena:
+                        action: Admin:Settings:paymentsLimits
+                        data:
+                            icon: fas fa-file-invoice-dollar
+                    Způsoby dopravy:
+                        action: Admin:Settings:transports
+                        data:
+                            icon: fas fa-bus
+                    Bonusy:
+                        action: Admin:Settings:bonuses
+                        data:
+                            icon: fas fa-beer
+                    Ubytovaní:
+                        action: Admin:Settings:lodging
+                        data:
+                            icon: fas fa-home
+                        items:
+                            Přidat ubytovaní:
+                                action: Admin:Settings:addLodging
+                                visibility:
+                                    menu: false
+                            Editovať ubytovaní:
+                                action: Settings:editLodging
+                                visibility:
+                                    menu: false
+                    Aktivity:
+                         action: Admin:Settings:activities
+                         data:
+                             icon: fas fa-graduation-cap

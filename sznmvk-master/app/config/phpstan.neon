@@ -1,0 +1,18 @@
+includes:
+    - ../../vendor/phpstan/phpstan-nette/extension.neon
+
+parameters:
+    level: 5
+
+    bootstrapFiles:
+        - ../../app/constants.php
+
+    universalObjectCratesClasses:
+        - Dibi\Row
+
+    scanDirectories:
+        - ../../app
+
+    ignoreErrors:
+        - '#Call to an undefined method Nette\\ComponentModel\\IComponent::setDisabled\(\).#'
+        - '#Anonymous function should return bool but return statement is missing.#'

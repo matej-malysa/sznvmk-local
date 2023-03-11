@@ -1,0 +1,17 @@
+{form form class => "form"}
+{snippetArea formError}
+    {snippet errors}
+        {var $form = $control['form']}
+        <div n:if="$form->hasErrors()">
+            {$form->render('errors')|noescape}
+        </div>
+    {/snippet}
+{/snippetArea}
+    <div class="div-block-15">
+        <label for="email" class="field-label required">E-mail</label>
+        <input type="email" class="text-field w-input" n:name="email" required>
+    </div>
+    <div class="h38">
+        <input type="submit" name="send" class="button w-button" value="Resetovat heslo">
+    </div>
+{/form}

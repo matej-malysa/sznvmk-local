@@ -1,0 +1,12 @@
+parameters:
+    database: sznmvk-db
+    dibi:
+        host: localhost
+        username: root
+        password: 
+        database: %database%
+        profiler: true
+        lazy: true
+        run: true
+        result:
+            detectTypes: true

@@ -1,0 +1,25 @@
+services:
+    -
+        factory: App\Classes\Nette\Security\AdminAuthenticator
+        autowired: self
+    -
+        factory: App\Classes\Nette\Security\Authenticator
+        autowired: self
+    - App\Model\ApplicationsModel
+    - App\Model\BonusesModel
+    - App\Model\CampDataModel
+    - App\Model\FacultiesModel
+    - App\Model\GendersModel
+    - App\Model\AllergiesModel
+    - App\Model\ActivitiesModel
+    - App\Model\FoodPreferencesModel
+    - App\Model\GraphModel
+    - App\Model\GroupsModel
+    - App\Model\ImportantDatesModel
+    - App\Model\LodgingModel
+    - App\Model\ParticipantsModel
+    - App\Model\PaymentsModel
+    - App\Model\PaymentsLimitsModel
+    - App\Model\SessionsModel
+    - App\Model\TransportModel
+    - App\Model\UserModel

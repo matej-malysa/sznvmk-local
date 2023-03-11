@@ -1,0 +1,137 @@
+{form form class => "form"}
+{snippetArea formError}
+    {snippet errors}
+        {var $form = $control['form']}
+        <div n:if="$form->hasErrors()">
+            {$form->render('errors')|noescape}
+        </div>
+    {/snippet}
+{/snippetArea}
+    <div class="div-block-15">
+        <label for="firstname" class="field-label required">Jméno</label>
+        <input type="text" class="text-field w-input" n:name="firstname" required>
+    </div>
+    <div class="div-block-15">
+        <label for="lastname" class="field-label required">Příjmení</label>
+        <input type="text" class="text-field w-input" n:name="lastname" required>
+    </div>
+    <div class="div-block-15">
+        <label for="email" class="field-label required">E-mail</label>
+        <input type="email" class="text-field w-input" n:name="email" disabled>
+    </div>
+    <div class="div-block-15">
+        <label for="gender" class="field-label required">Pohlaví</label>
+        <div class="div-block-16">
+            {foreach $gendersToSelect as $genderId => $gender}
+                <input type="radio" n:name="gender:$genderId" id="gender-{$genderId}" style="display: none">
+                <label for="gender-{$genderId}" class="radio-prihlaska w-button">{$gender['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+    <div class="div-block-15">
+        <label for="birthdate" class="field-label">Datum nar.</label>
+        <input type="text" class="flatpickr flatpickr-input text-field w-input" n:name="birthdate">
+    </div>
+    <div class="div-block-15">
+        <label for="phone" class="field-label">Telefon</label>
+        <input type="tel" class="text-field w-input" n:name="phone" data-name="phone" id="phone">
+    </div>
+
+    <div class="div-block-15">
+        <label for="faculty" class="field-label">Fakulta</label>
+        <select n:name="faculty" class="w-select">
+            {foreach $facultiesToSelect as $facultyId => $facultyName}
+                <option value="{$facultyId}">{$facultyName}</option>
+            {/foreach}
+        </select>
+    </div>
+    {if $group}
+        <div class="div-block-15">
+            <label for="session" class="field-label">Termín</label>
+            <div class="div-block-16">
+                <span style="color:white">Pro změnu turnusu nesmíš být přihlášen ve skupinovém ubytování.</span>
+            </div>
+        </div>
+    {else}
+        <div class="div-block-15">
+            <label for="session" class="field-label">Termín</label>
+            <div class="div-block-16">
+                {foreach $sessionsToSelect as $sessionId => $session}
+                    <input type="radio" n:name="session:$sessionId" id="session-{$sessionId}" style="display: none" {if !array_key_exists($sessionId, $allAvailableSessions)}disabled{/if}>
+                    <label for="session-{$sessionId}" class="radio-prihlaska w-button {if !array_key_exists($sessionId, $allAvailableSessions)}disabled{/if}">{$session['date']}</label>
+                {/foreach}
+            </div>
+        </div>
+    {/if}    
+    <div class="div-block-15">
+        <label for="allergy[]" style="width: auto; margin-bottom:5px;" class="field-label" >Diety a alergie</label>
+        <div class="div-block-16" >
+            {foreach $allergiesToSelect as $allergy_obj}
+                <input type=checkbox name="allergy[]" id={$allergy_obj['id']} value={$allergy_obj['id']} {if $allergy_obj['checked'] == 1}checked{/if}>
+                <label style="height: 30px; margin-left: 5px;margin-right: 20px; width: auto; display: inline; color: #fff; font-size: 16px;" for={$allergy_obj['id']}>{$allergy_obj['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+
+    {if $status == App\Model\ParticipantsModel::STATUS_CONFIRMED}
+        <div class="div-block-15">
+            <label for="activities[]" class="field-label" >Aktivity</label>
+            <div class="div-block-16">
+                {foreach $activitiesToSelect as $activity_obj}
+                    <input type=checkbox name="activities[]" id={$activity_obj['id']} value={$activity_obj['id']} {if $activity_obj['checked'] == 1}checked{/if}>
+                    <label style="height: 30px; margin-left: 5px;margin-right: 20px; width: auto; display: inline; color: #fff; font-size: 16px;" for={$activity_obj['id']}>{$activity_obj['name']}</label>
+                {/foreach}
+            </div>
+        </div>
+     {/if}
+    <div class="div-block-15">
+        <label for="transport" class="field-label fix">Doprava</label>
+        <div class="div-block-16">
+            {foreach $transportsToSelect as $transportId => $transport}
+                <input type="radio" n:name="transport:$transportId" id="transport-{$transportId}" style="display: none">
+                <label for="transport-{$transportId}" class="radio-prihlaska w-button">{$transport['name']}</label>
+            {/foreach}
+        </div>
+    </div>
+    {if $transportVlastni}
+        <div class="div-block-15">
+            <label for="spz" class="field-label">SPZ</label>
+            <input type="text" class="text-field w-input" n:name="spz">
+        </div>
+    {/if}
+
+    <div class="h38">
+        <input type="submit" name="send" class="button w-button" value="Upravit přihlášku">
+        <input type="submit" name="cancel" class="button cancel w-button next" value="Zrušit změny" formnovalidate>
+    </div>
+{/form}
+
+<script>
+    // Datepicker options for this form
+    $(".flatpickr").flatpickr({
+        locale: "cs",
+        altInput: true,
+        altFormat: "d.m.Y",
+        dateFormat: "Y-m-d",
+    });
+
+    // Show only localised country names (e.g. Česká republika)
+    var countryData = window.intlTelInputGlobals.getCountryData();
+    for (var i = 0; i < countryData.length; i++) {
+        var country = countryData[i];
+        country.name = country.name.replace(/.+\((.+)\)/,"$1");
+    }
+
+    var phone_number = window.intlTelInput(document.querySelector("#phone"), {
+        separateDialCode: true,
+        onlyCountries:["cz", "sk"],
+        hiddenInput: "full",
+        utilsScript: "//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.3/js/utils.js"
+    });
+
+    // Save phone number with prepended country code (e.g. +420123456789)
+    $("form").submit(function() {
+        var full_number = phone_number.getNumber(intlTelInputUtils.numberFormat.E164);
+        $("input[name='fullPhone'").val(full_number);
+    });
+</script>

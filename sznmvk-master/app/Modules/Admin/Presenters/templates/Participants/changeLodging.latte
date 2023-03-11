@@ -1,0 +1,153 @@
+{block title}Administrace | Detail přihlášky{/block}
+{block content}
+
+<div class="row">
+    <div class="col-12 flexbox">
+        <div class="col-lg-6">
+            <h1>{$application->firstname} {$application->lastname}</h1>
+        </div>
+        <div class="col-lg-2">
+            {switch $faculty->schoolId}
+                {case 1}
+                    <div class="faculty-box noFac">
+                {case 2}
+                    <div class="faculty-box muni">
+                {case 3}
+                    <div class="faculty-box vut">
+                {case 4}
+                    <div class="faculty-box mendelu">
+            {/switch}
+            {$faculty->name}
+            {if in_array($faculty->schoolId, [1,2,3,4])}
+                </div>
+            {/if}
+        </div>
+        <div class="col-lg-2">
+        {switch $application->gender}
+            {case 1}
+                <div class="faculty-box vut">
+            {case 2}
+                <div class="faculty-box muni">
+        {/switch}
+            {$gender}
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="faculty-box noFac">
+
+            Turnus {$application->session}
+             </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h3>Aktuální ubytovaní:</h3>
+        <div class="row">
+            <div class="col-12 flexbox">
+                <div class="col-lg-6">
+                    <h3>Základní údaje</h3>
+                    {if !empty($lodging)}
+                    <table class="table table-striped">
+                        <tr>
+                            <td>ID: </td>
+
+                                <td >{$lodging['id']}</td><td><a title="Odhlásit účastníka z ubytování" href="{plink Participants:unsetLodging $application->id}" class="btn btn-primary">Odhlásiť</a>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>Název: </td>
+
+                                <td>{$lodging['name']}</td><td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Typ ubytování:</td>
+                            <td>{$lodging['type']}</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Obsadené lužka:</td>
+                            <td>{$lodging['space']}</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>Umiestnenie uzamknuté: </td>
+
+                            <td>{if $lodging['lock_room']}ÁNO{else} NIE {/if}</td><td><a title="Uzamknout ubytování účastníka" href="{plink Participants:lockLodging $application->id}" {if $lodging['lock_room']} class="btn btn-primary fa fa-unlock"{else}class="btn btn-primary fa fa-lock"{/if}></a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Spolubývající</h3>
+                    <table class="table table-striped">
+                        {foreach $mates as $mate}
+                        <tr>
+                            <td>Meno:</td>
+
+                                <td>{$mate['firstname'].' '.$mate['lastname']}</td>
+
+                            <td>Fakulta:</td>
+
+                                <td>{$mate['fac']}</td>
+
+                            <td>Pohlaví:</td>
+
+                                <td>{$mate['gen']}</td>
+
+                        </tr>
+                        {/foreach}
+
+                    </table>
+                    {else}
+                    NEUBYTOVANÝ
+                    {/if}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h3>Volné ubytovaní:</h3>
+        {if !empty($lodging)}
+            {if $lodging['lock_room']}
+                UZAMKNUTÉ
+            {else}
+                {snippet grid}
+                    {control freeLodgingGrid}
+                {/snippet}
+            {/if}
+         {else}
+            {snippet grid2}
+                {control freeLodgingGrid}
+            {/snippet}
+        {/if}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h3>Možnosť výmeny:</h3>
+        {if !empty($lodging)}
+            {if $lodging['lock_room']}
+                UZAMKNUTÉ
+            {else}
+                {snippet grid3}
+                    {control swapLodgingGrid}
+                {/snippet}
+            {/if}
+
+        {else}
+            {snippet grid4}
+                {control swapLodgingGrid}
+            {/snippet}
+        {/if}
+
+    </div>
+</div>
+
